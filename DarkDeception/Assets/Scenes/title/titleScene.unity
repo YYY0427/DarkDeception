@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 459825055}
   - component: {fileID: 459825054}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: startText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -517,6 +517,7 @@ GameObject:
   - component: {fileID: 1225409357}
   - component: {fileID: 1225409356}
   - component: {fileID: 1225409359}
+  - component: {fileID: 1225409360}
   m_Layer: 5
   m_Name: start
   m_TagString: Untagged
@@ -651,6 +652,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71794892f3a277e4cbff2f0822f1e00e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _objText: {fileID: 0}
+  _text: {fileID: 0}
+--- !u!114 &1225409360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225409354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71794892f3a277e4cbff2f0822f1e00e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objText: {fileID: 0}
+  _text: {fileID: 0}
 --- !u!1 &1383292328
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,7 +930,7 @@ GameObject:
   - component: {fileID: 2013911712}
   - component: {fileID: 2013911711}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: quitText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1048,7 +1065,7 @@ GameObject:
   - component: {fileID: 2032476875}
   - component: {fileID: 2032476874}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: "\u30BF\u30A4\u30C8\u30EB"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
