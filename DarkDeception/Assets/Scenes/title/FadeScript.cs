@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FadeScript : MonoBehaviour
 {
-    readonly float waitTime = 1f;
+    readonly float waitTime = 1.5f;
 
     private void Start()
     {

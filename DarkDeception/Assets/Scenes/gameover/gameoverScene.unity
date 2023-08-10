@@ -542,6 +542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _objText: {fileID: 0}
   _text: {fileID: 0}
+  _fadePrefab: {fileID: 2962066694001493853, guid: d5b406b149cde684abe8d617bf448f4f, type: 3}
 --- !u!1 &1139905016
 GameObject:
   m_ObjectHideFlags: 0
@@ -1227,6 +1228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _objText: {fileID: 0}
   _text: {fileID: 0}
+  _fadePrefab: {fileID: 2962066694001493853, guid: d5b406b149cde684abe8d617bf448f4f, type: 3}
 --- !u!1 &1863728214
 GameObject:
   m_ObjectHideFlags: 0
