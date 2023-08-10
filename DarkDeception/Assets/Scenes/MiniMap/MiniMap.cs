@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class MiniMap : MonoBehaviour
 {
-    GameObject enemyObj;
+    //プレイヤーオブジェ取得
+    GameObject playerObj;
 
-    Vector3 enemyPos;
     // Start is called before the first frame update
     void Start()
     {
-        enemyObj = GameObject.Find("Enemy");
-        enemyPos = enemyObj.transform.position;
+        playerObj = GameObject.Find("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = new Vector3(enemyPos.x, enemyPos.y + 500, enemyPos.z);
+        // プレイヤーの座標を代入(カメラの位置を上にするためにyに500を加える)
+        this.transform.position = new Vector3(playerObj.transform.position.x, playerObj.transform.position.y + 500, playerObj.transform.position.z);
 
-        enemyPos = enemyObj.transform.position;
+        //プレイヤーの角度を代入
+
+        Vector3 rot = playerObj.transform.eulerAngles; // プレイヤーの角度をVector3に直す
+        this.transform.rotation = Quaternion.Euler(90, rot.y, 0);
+        //this.transform.rotation.x = rot.x;
     }
 }
