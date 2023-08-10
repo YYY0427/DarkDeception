@@ -10,6 +10,9 @@ public class start : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
     public GameObject _objText;
     public TextMeshProUGUI _text;
+    public GameObject _fadePrefab;
+
+    readonly float _fadeSpeed = 1f;
 
     void Start()
     {
@@ -19,8 +22,7 @@ public class start : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 
     public void OnClickStartButton()
     {
-        SceneManager.LoadScene("sceneSelectScene");
-        Debug.Log("‰Ÿ‚³‚ê‚½");
+        StartCoroutine(nameof(LoadScene));
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -34,4 +36,12 @@ public class start : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
         Debug.Log("ƒ}ƒEƒX‚ª" + gameObject.name + "‚©‚ç—£‚ê‚½");
         _text.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
     }
+
+    IEnumerator LoadScene()
+    {
+        Instantiate(_fadePrefab);
+        yield return new WaitForSeconds(_fadeSpeed);
+        SceneManager.LoadScene("sceneSelectScene");
+    }
+
 }
