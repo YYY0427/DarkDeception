@@ -2,25 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class tempCrystalBoss : MonoBehaviour
+public class RemainingLife : MonoBehaviour
 {
-   
+    MovePlayer _script;
 
     // Start is called before the first frame update
     void Start()
     {
-       
+        _script = GameObject.Find("Player").GetComponent<MovePlayer>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        count = 0;
-        foreach (Transform child in _crystal.transform)
-        {
-            count++;
-        }
-        _text.text = "remaining  " + count.ToString();
+        //Debug.Log(_script.life);
     }
 }
