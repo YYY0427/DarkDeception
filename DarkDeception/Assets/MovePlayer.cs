@@ -19,7 +19,7 @@ public class MovePlayer : MonoBehaviour
 
     private float currentSpeed; // Œ»İ‚ÌˆÚ“®‘¬“x
 
-    public static int life = 4;
+    PlayerLife life = new PlayerLife();
 
     void Update()
     {
@@ -66,34 +66,35 @@ public class MovePlayer : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Return))
         {
-            life = System.Math.Max(life - 1, 0);
-            if (life <= 0)
-            {
-                SceneManager.LoadScene("gameoverScene");
-            }
-            else
-            {
-                SceneManager.LoadScene("RemainingLifeScene");
-            }
+            life.changeScene();
         }
-
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "Enemy")
         {
-            life = System.Math.Max(life - 1, 0);
-
-            if(life <= 0)
-            {
-                SceneManager.LoadScene("gameoverScene");
-            }
-            else
-            {
-                SceneManager.LoadScene("RemainingLifeScene");
-            }
+            life.changeScene();
         }
     }
 
+}
+
+public class PlayerLife
+{
+    public static int life = 3;
+
+    public void changeScene()
+    {
+        life = System.Math.Max(life - 1, 0);
+
+        if (life <= 0)
+        {
+            SceneManager.LoadScene("gameoverScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("RemainingLifeScene");
+        }
+    }
 }

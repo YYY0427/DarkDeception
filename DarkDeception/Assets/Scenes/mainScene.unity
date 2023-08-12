@@ -5265,7 +5265,6 @@ MonoBehaviour:
   walkSpeed: 15
   dashSpeed: 30
   dashDuration: 1
-  life: 3
 --- !u!1 &1493449034
 GameObject:
   m_ObjectHideFlags: 0
