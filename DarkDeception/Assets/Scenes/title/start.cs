@@ -27,13 +27,11 @@ public class start : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("マウスが" + gameObject.name + "に触れた");
         _text.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("マウスが" + gameObject.name + "から離れた");
         _text.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
     }
 

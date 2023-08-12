@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MovePlayer : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class MovePlayer : MonoBehaviour
     public float dashDuration = 1.0f; // ダッシュの持続時間
 
     private float currentSpeed; // 現在の移動速度
+
+    public static int life = 4;
 
     void Update()
     {
@@ -60,5 +63,37 @@ public class MovePlayer : MonoBehaviour
 
         // 移動ベクトルに速度をかけて移動
         transform.Translate(moveDirection.normalized * currentSpeed * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.Return))
+        {
+            life = System.Math.Max(life - 1, 0);
+            if (life <= 0)
+            {
+                SceneManager.LoadScene("gameoverScene");
+            }
+            else
+            {
+                SceneManager.LoadScene("RemainingLifeScene");
+            }
+        }
+
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Enemy")
+        {
+            life = System.Math.Max(life - 1, 0);
+
+            if(life <= 0)
+            {
+                SceneManager.LoadScene("gameoverScene");
+            }
+            else
+            {
+                SceneManager.LoadScene("RemainingLifeScene");
+            }
+        }
+    }
+
 }

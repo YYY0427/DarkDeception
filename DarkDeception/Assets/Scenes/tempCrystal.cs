@@ -9,7 +9,6 @@ public class tempCrystal : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            Debug.Log("hit");
             Destroy(this.gameObject);
         }
     }
