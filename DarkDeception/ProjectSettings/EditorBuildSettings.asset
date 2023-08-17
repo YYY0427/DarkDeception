@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/remainingLife/RemainingLifeScene.unity
     guid: 34c749b93d7f57e42894386189bbb59c
+  - enabled: 1
+    path: Assets/Scenes/clear/clearScene.unity
+    guid: 32e34070145313e41afb478b84b19d84
   m_configObjects: {}
