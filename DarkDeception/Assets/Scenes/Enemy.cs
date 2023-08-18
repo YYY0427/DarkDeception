@@ -4,15 +4,19 @@ using UnityEngine;
 
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
-    public GameObject target;
-    private NavMeshAgent agent;
+    [SerializeField]
+    [Tooltip("í«Ç¢Ç©ÇØÇÈëŒè€")]
+    //   private GameObject target;
+    private Transform target;
+    private NavMeshAgent navMeshAgent;
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -20,7 +24,9 @@ public class Enemy : MonoBehaviour
     {
         if (target)
         {
-            agent.destination = target.transform.position;
+            navMeshAgent.destination =target.position; 
+        //    navMeshAgent.SetDestination(target.position);
+        //   navMeshAgent.destination = target.transform.position;
         }
     }
 }
