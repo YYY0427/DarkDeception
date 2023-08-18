@@ -16,7 +16,7 @@ public class reopen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     void Start()
     {
-        _objText = GameObject.Find("reopenText");
+        _objText = GameObject.Find("continueText");
         _text = _objText.GetComponent<TextMeshProUGUI>();
     }
     public void OnClickStartButton()
