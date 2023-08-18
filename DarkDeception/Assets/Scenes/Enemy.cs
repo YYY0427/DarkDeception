@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     [Tooltip("’Ç‚¢‚©‚¯‚é‘ÎÛ")]
     //   private GameObject target;
-    private Transform target;
+    public Transform target;
     private NavMeshAgent navMeshAgent;
 
     // Start is called before the first frame update
