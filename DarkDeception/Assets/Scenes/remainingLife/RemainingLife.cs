@@ -26,9 +26,4 @@ public class RemainingLife : MonoBehaviour
         g.transform.SetParent(canvas.transform, false);
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        Debug.Log(PlayerLife.life);
-    }
 }

@@ -12,6 +12,7 @@ public class NumberOfCrystalsRemaining : MonoBehaviour
     public GameObject _fadePrefab;
 
     int count = 0;
+    int fadeCount = 1;
     readonly float _fadeSpeed = 1f;
 
     // Start is called before the first frame update
@@ -31,10 +32,12 @@ public class NumberOfCrystalsRemaining : MonoBehaviour
         }
         _text.text = "remaining  " + count.ToString();
 
-        if(count <= 0)
+        if(count == 0 && fadeCount > 0)
         {
+            fadeCount = 0;
             StartCoroutine(nameof(LoadScene));
         }
+
     }
 
     IEnumerator LoadScene()
