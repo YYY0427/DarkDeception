@@ -21,6 +21,13 @@ public class MovePlayer : MonoBehaviour
 
     PlayerLife life = new PlayerLife();
 
+    GameObject _singletonObj;
+
+    private void Start()
+    {
+        _singletonObj = GameObject.Find("Singleton");
+    }
+
     void Update()
     {
         // ƒ}ƒEƒX‚Ì“ü—Í‚ðŽæ“¾
@@ -66,28 +73,40 @@ public class MovePlayer : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Return))
         {
+            life.lifeDecrease();
+            if (PlayerLife.life <= 0)
+            {
+                SingletonScript.instance = null;
+                Destroy(_singletonObj);
+
+            }
             life.changeScene();
         }
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Enemy")
         {
+            life.lifeDecrease();
+            if (PlayerLife.life <= 0)
+            {
+                SingletonScript.instance = null;
+                Destroy(_singletonObj);
+
+            }
             life.changeScene();
         }
     }
-
 }
 
 public class PlayerLife
 {
     public static int life = 3;
-
     public void changeScene()
     {
-        life = System.Math.Max(life - 1, 0);
-
+       
         if (life <= 0)
         {
             SceneManager.LoadScene("gameoverScene");
@@ -97,4 +116,10 @@ public class PlayerLife
             SceneManager.LoadScene("RemainingLifeScene");
         }
     }
+
+    public void lifeDecrease()
+    {
+        life = System.Math.Max(life - 1, 0);
+    }
+
 }

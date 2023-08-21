@@ -324,11 +324,24 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -195
       objectReference: {fileID: 0}
+    - target: {fileID: 8260775341750136685, guid: dde9114cce8e15143b30acddb6e6fb92, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2054907622}
+    - target: {fileID: 8260775341750136685, guid: dde9114cce8e15143b30acddb6e6fb92, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickStartButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8260775341750136685, guid: dde9114cce8e15143b30acddb6e6fb92, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: remainingLifeContinue, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 8260775341909971965, guid: dde9114cce8e15143b30acddb6e6fb92, type: 3}
       propertyPath: m_text
       value: Remaining Life
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8260775341750136680, guid: dde9114cce8e15143b30acddb6e6fb92, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dde9114cce8e15143b30acddb6e6fb92, type: 3}
 --- !u!1 &1921918197
 GameObject:
@@ -482,3 +495,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2054907620 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8260775341750136687, guid: dde9114cce8e15143b30acddb6e6fb92, type: 3}
+  m_PrefabInstance: {fileID: 1507944120}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2054907622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054907620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43215dc000664004ebf71f41a3667fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objText: {fileID: 0}
+  _text: {fileID: 0}
+  _fadePrefab: {fileID: 2962066694001493853, guid: d5b406b149cde684abe8d617bf448f4f, type: 3}

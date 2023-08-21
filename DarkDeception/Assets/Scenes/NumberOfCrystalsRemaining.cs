@@ -10,6 +10,7 @@ public class NumberOfCrystalsRemaining : MonoBehaviour
     public TextMeshProUGUI _text;
     public GameObject _crystal;
     public GameObject _fadePrefab;
+    GameObject _singletonObj;
 
     int count = 0;
     int fadeCount = 1;
@@ -20,6 +21,7 @@ public class NumberOfCrystalsRemaining : MonoBehaviour
     {
         _crystal = GameObject.Find("tempCrystal");
         _objText = GameObject.Find("crystalNum");
+        _singletonObj = GameObject.Find("Singleton");
         _text = _objText.GetComponent<TextMeshProUGUI>();
     }
 
@@ -44,6 +46,8 @@ public class NumberOfCrystalsRemaining : MonoBehaviour
     {
         Instantiate(_fadePrefab);
         yield return new WaitForSeconds(_fadeSpeed);
+        SingletonScript.instance = null;
+        Destroy(_singletonObj);
         SceneManager.LoadScene("clearScene");
     }
 

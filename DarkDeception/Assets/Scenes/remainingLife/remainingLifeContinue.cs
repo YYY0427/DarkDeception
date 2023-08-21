@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class reopen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class remainingLifeContinue : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-
     public GameObject _objText;
     public TextMeshProUGUI _text;
     public GameObject _fadePrefab;
@@ -20,8 +19,7 @@ public class reopen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         _text = _objText.GetComponent<TextMeshProUGUI>();
     }
     public void OnClickStartButton()
-   {
-        PlayerLife.life = 3;
+    {
         StartCoroutine(nameof(LoadScene));
     }
 
@@ -41,5 +39,4 @@ public class reopen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         yield return new WaitForSeconds(_fadeSpeed);
         SceneManager.LoadScene("mainScene");
     }
-
 }
