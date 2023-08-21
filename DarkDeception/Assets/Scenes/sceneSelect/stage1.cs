@@ -39,7 +39,7 @@ public class stage1 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         Instantiate(_fadePrefab);
         yield return new WaitForSeconds(_fadeSpeed);
-        SceneManager.LoadScene("mainScene");
+        SceneManager.LoadScene("SceneMain");
     }
 
 }

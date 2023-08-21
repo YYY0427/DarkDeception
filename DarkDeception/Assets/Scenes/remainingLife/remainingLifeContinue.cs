@@ -37,6 +37,6 @@ public class remainingLifeContinue : MonoBehaviour, IPointerEnterHandler, IPoint
     {
         Instantiate(_fadePrefab);
         yield return new WaitForSeconds(_fadeSpeed);
-        SceneManager.LoadScene("mainScene");
+        SceneManager.LoadScene("SceneMain");
     }
 }
