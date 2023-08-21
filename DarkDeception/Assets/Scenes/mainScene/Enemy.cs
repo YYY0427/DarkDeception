@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     {
         if (target)
         {
-            navMeshAgent.destination =target.position; 
+            navMeshAgent.destination = target.position; 
         //    navMeshAgent.SetDestination(target.position);
         //   navMeshAgent.destination = target.transform.position;
         }
