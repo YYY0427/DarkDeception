@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MovePlayer : MonoBehaviour
 {
     public Transform target; // 注視対象のTransform（通常はプレイヤーオブジェクト）
+    private Rigidbody rb;
 
     public float sensitivity = 2.0f; // マウス感度
     public float smoothing = 2.0f;   // スムージング
@@ -26,6 +27,7 @@ public class MovePlayer : MonoBehaviour
     private void Start()
     {
         _singletonObj = GameObject.Find("Singleton");
+        rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
     }
 
     void Update()
@@ -49,18 +51,17 @@ public class MovePlayer : MonoBehaviour
 
         float newRotationY = mouseLook.y + 180f;
 
-
         // マウスホイールが押されているかどうかをチェック
         bool isWheelCrick = Input.GetMouseButtonDown(2);
 
         // Todo:ホイールクリック時は視点を180°反対方向に回転させる
         mouseLook.x = isWheelCrick ? mouseLook.x + newRotationY : mouseLook.x;
 
+        float horizontalInput = Input.GetAxis("Horizontal");    // aとs
+        float verticalInput = Input.GetAxis("Vertical");        // wとs
 
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        Vector3 moveDirection = new Vector3(horizontalInput, 0.0f, verticalInput);
+        Vector3 moveDirection = new Vector3(horizontalInput, 0.0f, horizontalInput);
+        Vector3 moveDirection2 = new Vector3(verticalInput, 0.0f, verticalInput);
 
         // Shiftキーが押されているかどうかをチェック
         bool isDashing = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
@@ -69,7 +70,19 @@ public class MovePlayer : MonoBehaviour
         currentSpeed = isDashing ? dashSpeed : walkSpeed;
 
         // 移動ベクトルに速度をかけて移動
-        transform.Translate(moveDirection.normalized * currentSpeed * Time.deltaTime);
+        //   transform.Translate(moveDirection.normalized * currentSpeed * Time.deltaTime);
+        rb.AddForce(Vector3.Scale(transform.forward, moveDirection2.normalized) * currentSpeed/** Time.deltaTime*/, ForceMode.Force);
+        rb.AddForce(Vector3.Scale(transform.right, moveDirection.normalized) * currentSpeed/** Time.deltaTime*/, ForceMode.Force);
+
+        if(rb.velocity.magnitude > currentSpeed)
+        {
+            rb.velocity = rb.velocity.normalized * currentSpeed;
+        }
+
+        if(horizontalInput == 0 && verticalInput == 0)
+        {
+            Stop();
+        }
 
         if (Input.GetKey(KeyCode.Return))
         {
@@ -82,7 +95,6 @@ public class MovePlayer : MonoBehaviour
             }
             life.changeScene();
         }
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -98,6 +110,11 @@ public class MovePlayer : MonoBehaviour
             }
             life.changeScene();
         }
+    }
+    private void Stop()
+    {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 }
 
