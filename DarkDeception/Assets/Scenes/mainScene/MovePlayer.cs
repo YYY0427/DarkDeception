@@ -60,6 +60,11 @@ public class MovePlayer : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");    // a‚Æs
         float verticalInput = Input.GetAxis("Vertical");        // w‚Æs
 
+        if (horizontalInput == 0 && verticalInput == 0)
+        {
+            Stop();
+        }
+
         Vector3 moveDirection = new Vector3(horizontalInput, 0.0f, horizontalInput);
         Vector3 moveDirection2 = new Vector3(verticalInput, 0.0f, verticalInput);
 
@@ -79,10 +84,7 @@ public class MovePlayer : MonoBehaviour
             rb.velocity = rb.velocity.normalized * currentSpeed;
         }
 
-        if(horizontalInput == 0 && verticalInput == 0)
-        {
-            Stop();
-        }
+        
 
         if (Input.GetKey(KeyCode.Return))
         {
