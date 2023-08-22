@@ -17,7 +17,9 @@ public class MiniMap : MonoBehaviour
     void Update()
     {
         // プレイヤーの座標を代入(カメラの位置を上にするためにyに500を加える)
-        this.transform.position = new Vector3(playerObj.transform.position.x, playerObj.transform.position.y + 500, playerObj.transform.position.z);
+        this.transform.position = new Vector3(playerObj.transform.position.x, playerObj.transform.position.y + 20, playerObj.transform.position.z);
+
+        Debug.Log(playerObj.transform.position.y);
 
         //プレイヤーの角度を代入
 
