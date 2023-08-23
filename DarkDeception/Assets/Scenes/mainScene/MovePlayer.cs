@@ -114,8 +114,10 @@ public class MovePlayer : MonoBehaviour
     }
     private void Stop()
     {
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
+        rb.velocity = new Vector3(0, rb.velocity.y, 0);
+        rb.angularVelocity = new Vector3(0, rb.angularVelocity.y, 0);
+        //    rb.velocity = Vector3.zero;
+        //    rb.angularVelocity = Vector3.zero;
     }
 }
 
