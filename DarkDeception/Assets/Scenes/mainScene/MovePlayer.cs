@@ -84,7 +84,6 @@ public class MovePlayer : MonoBehaviour
             rb.velocity = rb.velocity.normalized * currentSpeed;
         }
 
-        
 
         if (Input.GetKey(KeyCode.Return))
         {
