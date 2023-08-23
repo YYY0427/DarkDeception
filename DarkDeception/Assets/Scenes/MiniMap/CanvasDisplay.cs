@@ -22,9 +22,9 @@ public class CanvasDisplay : MonoBehaviour
         if (Input.GetKeyDown("m"))
         {
             active = !active;
-        }
-
-        canvasObj.SetActive(active);
+            canvasObj.SetActive(active);
+            //Debug.Log("aaaaa");
+        }   
     }
 
     private void FixedUpdate()
