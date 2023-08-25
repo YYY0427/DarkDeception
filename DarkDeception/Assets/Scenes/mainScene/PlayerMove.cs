@@ -107,9 +107,9 @@ public class PlayerMove : MonoBehaviour
             life.changeScene();
         }
 
-        for(int i = 0; i < enemyObj.Length; i++)
+        for (int i = 0; i < enemyObj.Length; i++)
         {
-            Vector3 playerToEnemy = (enemyObj[i].transform.position - 
+            Vector3 playerToEnemy = (enemyObj[i].transform.position -
                 this.transform.position);
 
             float dist = Mathf.Abs(playerToEnemy.magnitude);
