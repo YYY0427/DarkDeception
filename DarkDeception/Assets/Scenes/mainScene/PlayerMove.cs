@@ -48,12 +48,13 @@ public class PlayerMove : MonoBehaviour
         mouseLook += smoothV;
 
         // 上下方向の回転を制限
-        mouseLook.y = Mathf.Clamp(mouseLook.y, -90f, 90f);
-        //   mouseLook.x = Mathf.Clamp(mouseLook.x, -90f, 90f);
+        mouseLook.y = Mathf.Clamp(mouseLook.y, -85f, 85f);
+        //mouseLook.x = Mathf.Clamp(mouseLook.x, -90f, 90f);
 
         // カメラとプレイヤーの向きを更新
-        transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
-        transform.localRotation = Quaternion.AngleAxis(mouseLook.x, Vector3.up);
+        //transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
+        //transform.localRotation = Quaternion.AngleAxis(mouseLook.x, Vector3.up);
+        transform.localRotation = Quaternion.Euler(-mouseLook.y, mouseLook.x, 0); ;
 
         float newRotationY = mouseLook.y + 180f;
 
@@ -80,15 +81,22 @@ public class PlayerMove : MonoBehaviour
         Vector3 moveZ = cameraForward * Input.GetAxis("Vertical") * speed;  //　前後（カメラ基準）　 
         Vector3 moveX = transform.right * Input.GetAxis("Horizontal") * speed; // 左右（カメラ基準）
 
+        Vector3 move = (moveZ + moveX);
+
+        if(move.magnitude > speed)
+        {
+            move = move.normalized * speed;
+        }
+
         // 地面にいるかどうか
         if (con.isGrounded)
         {
-            moveDirection = moveZ + moveX;
+            moveDirection = move;
         }
         else
         {
             // 重力を効かせる
-            moveDirection = moveZ + moveX + new Vector3(0, moveDirection.y, 0);
+            moveDirection = move + new Vector3(0, moveDirection.y, 0);
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
