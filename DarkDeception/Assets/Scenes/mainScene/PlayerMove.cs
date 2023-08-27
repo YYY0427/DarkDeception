@@ -27,6 +27,8 @@ public class PlayerMove : MonoBehaviour
 
     GameObject _singletonObj;
 
+    static GameObject _enemyObj; // シーン移行時にenemyの種類を確認するための変数
+
     // Start is called before the first frame update
     void Start()
     {
@@ -124,6 +126,19 @@ public class PlayerMove : MonoBehaviour
 
             if (dist < Mathf.Abs(12.0f))
             {
+                if(i == 0)
+                {
+                    _enemyObj = (GameObject)Resources.Load("G1_Black");
+                }
+                if (i == 1)
+                {
+                    _enemyObj = (GameObject)Resources.Load("G1_Yellow");
+                }
+                if (i == 2)
+                {
+                    _enemyObj = (GameObject)Resources.Load("G1_Red");
+                }
+                DontDestroyOnLoad(_enemyObj);
                 life.lifeDecrease();
                 if (PlayerLife.life <= 0)
                 {
