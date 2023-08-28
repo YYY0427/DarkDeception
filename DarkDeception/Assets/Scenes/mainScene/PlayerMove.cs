@@ -8,7 +8,7 @@ public class PlayerMove : MonoBehaviour
 {
     CharacterController con;
 
-    [SerializeField] private GameObject[] enemyObj = new GameObject[3];
+    [SerializeField] private GameObject[] enemyObj = new GameObject[4];
 
     public float walkSpeed = 5.0f;  // 通常の移動速度
     public float dashSpeed = 10.0f; // ダッシュ時の移動速度

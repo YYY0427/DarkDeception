@@ -2409,9 +2409,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyObj:
+  - {fileID: 1856875403}
+  - {fileID: 679071137}
   - {fileID: 958276648}
   - {fileID: 258484190}
-  - {fileID: 679071137}
+  - {fileID: 1657461214}
   walkSpeed: 30
   dashSpeed: 45
   gravity: 100
@@ -3041,6 +3043,10 @@ PrefabInstance:
     - target: {fileID: 466174982370493815, guid: 7577e3de9babd604d9880ded032d1752, type: 3}
       propertyPath: m_Name
       value: Transparent
+      objectReference: {fileID: 0}
+    - target: {fileID: 466174982370493815, guid: 7577e3de9babd604d9880ded032d1752, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3644406075498192761, guid: 7577e3de9babd604d9880ded032d1752, type: 3}
       propertyPath: m_Materials.Array.data[0]
