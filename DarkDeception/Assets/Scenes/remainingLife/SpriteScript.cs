@@ -9,13 +9,13 @@ public class SpriteScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        obj = (GameObject)Resources.Load("Sprite 1");
+        obj = (GameObject)Resources.Load("spriteBone");
 
         spriteX = 320;
         for (int i = PlayerLife.life; i > 0; i--)
         {
-            Instantiate(obj, new Vector3(spriteX, 190, 0), Quaternion.AngleAxis(-90.0f,new Vector3(1.0f,0.0f,0.0f)));
-            spriteX += 100;
+            Instantiate(obj, new Vector3(spriteX, 190, 0), Quaternion.identity);
+            spriteX += 60;
         }
     }
 
