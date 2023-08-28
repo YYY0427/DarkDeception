@@ -25,13 +25,16 @@ public class GameOver : MonoBehaviour
     {
         if (gameOver)
         {
-            canvasObj.SetActive(true);
+            //canvasObj.SetActive(true);
             enemyObj.transform.rotation = cameraObj.transform.rotation;
-            enemyObj.transform.Translate(0, 180, 0);
+            enemyObj.transform.Translate(180, 0, 0);
 
             // カメラの向きを基準にした正面方向のベクトル
-            Vector3 cameraForward = Vector3.Scale(transform.forward, new Vector3(1, 0, 1)).normalized;
+            Vector3 cameraForward = cameraObj.transform.forward.normalized * 10;
+            Vector3 cameraDown = cameraObj.transform.up.normalized * 10;
+            cameraDown.y *= -1;
 
+            enemyObj.transform.position = cameraForward + cameraObj.transform.position + cameraDown;
 
         }
     }

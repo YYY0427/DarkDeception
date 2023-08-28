@@ -50,12 +50,16 @@ public class PlayerMove : MonoBehaviour
 
         // 上下方向の回転を制限
         mouseLook.y = Mathf.Clamp(mouseLook.y, -85f, 85f);
-        //mouseLook.x = Mathf.Clamp(mouseLook.x, -90f, 90f);
+        if (GameOver.gameOver)
+        {
+            //mouseLook.x = Mathf.Clamp(mouseLook.x, -90f, 90f);
+            mouseLook.y = Mathf.Clamp(mouseLook.y, 0, 0);
+        }
 
         // カメラとプレイヤーの向きを更新
         //transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
         //transform.localRotation = Quaternion.AngleAxis(mouseLook.x, Vector3.up);
-        transform.localRotation = Quaternion.Euler(-mouseLook.y, mouseLook.x, 0); ;
+        transform.localRotation = Quaternion.Euler(-mouseLook.y, mouseLook.x, 0);
 
         float newRotationY = mouseLook.y + 180f;
 
@@ -123,18 +127,18 @@ public class PlayerMove : MonoBehaviour
 
             float dist = Mathf.Abs(playerToEnemy.magnitude);
 
-            if (dist < Mathf.Abs(12.0f))
+            if (dist < Mathf.Abs(12.0f) && !GameOver.gameOver)
             {
                 GameOver.gameOver = true;
                 GameOver.enemyObj = enemyObj[i];
-                //life.lifeDecrease();
-                //if (PlayerLife.life <= 0)
-                //{
-                //    SingletonScript.instance = null;
-                //    Destroy(_singletonObj);
+                life.lifeDecrease();
+                if (PlayerLife.life <= 0)
+                {
+                    SingletonScript.instance = null;
+                    Destroy(_singletonObj);
 
-                //}
-                //life.changeScene();
+                }
+                life.changeScene();
             }
 
             Debug.Log(dist);
@@ -151,11 +155,11 @@ public class PlayerLife
 
         if (life <= 0)
         {
-            SceneManager.LoadScene("gameoverScene");
+            SceneManager.LoadScene("KnockDownScene");
         }
         else
         {
-            SceneManager.LoadScene("RemainingLifeScene");
+            SceneManager.LoadScene("KnockDownScene");
         }
     }
 
