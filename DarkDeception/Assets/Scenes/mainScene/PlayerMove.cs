@@ -27,8 +27,6 @@ public class PlayerMove : MonoBehaviour
 
     GameObject _singletonObj;
 
-    static GameObject _enemyObj; // シーン移行時にenemyの種類を確認するための変数
-
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +38,7 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         // マウスの入力を取得
         Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
@@ -85,7 +84,7 @@ public class PlayerMove : MonoBehaviour
 
         Vector3 move = (moveZ + moveX);
 
-        if(move.magnitude > speed)
+        if (move.magnitude > speed)
         {
             move = move.normalized * speed;
         }
@@ -126,14 +125,16 @@ public class PlayerMove : MonoBehaviour
 
             if (dist < Mathf.Abs(12.0f))
             {
-                life.lifeDecrease();
-                if (PlayerLife.life <= 0)
-                {
-                    SingletonScript.instance = null;
-                    Destroy(_singletonObj);
+                GameOver.gameOver = true;
+                GameOver.enemyObj = enemyObj[i];
+                //life.lifeDecrease();
+                //if (PlayerLife.life <= 0)
+                //{
+                //    SingletonScript.instance = null;
+                //    Destroy(_singletonObj);
 
-                }
-                life.changeScene();
+                //}
+                //life.changeScene();
             }
 
             Debug.Log(dist);
