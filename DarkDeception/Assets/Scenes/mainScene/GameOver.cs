@@ -9,10 +9,13 @@ public class GameOver : MonoBehaviour
 
     public static GameObject enemyObj;
 
+    GameObject cameraObj;
+
     public static bool gameOver;
     void Start()
     {
         canvasObj = GameObject.Find("GameOverBackGround");
+        cameraObj = GameObject.Find("Camera");
         canvasObj.SetActive(false);
         gameOver = false;
     }
@@ -20,11 +23,16 @@ public class GameOver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameOver = true;
         if (gameOver)
         {
             canvasObj.SetActive(true);
-            Debug.Log("unti");
+            enemyObj.transform.rotation = cameraObj.transform.rotation;
+            enemyObj.transform.Translate(0, 180, 0);
+
+            // カメラの向きを基準にした正面方向のベクトル
+            Vector3 cameraForward = Vector3.Scale(transform.forward, new Vector3(1, 0, 1)).normalized;
+
+
         }
     }
 }
