@@ -110,6 +110,7 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Return))
         {
+            life.changeScene();
             life.lifeDecrease();
             if (PlayerLife.life <= 0)
             {
@@ -117,7 +118,6 @@ public class PlayerMove : MonoBehaviour
                 Destroy(_singletonObj);
 
             }
-            life.changeScene();
         }
 
         for (int i = 0; i < enemyObj.Length; i++)
@@ -131,17 +131,17 @@ public class PlayerMove : MonoBehaviour
             {
                 GameOver.gameOver = true;
                 GameOver.enemyObj = enemyObj[i];
+                life.changeScene();
                 life.lifeDecrease();
                 if (PlayerLife.life <= 0)
                 {
                     SingletonScript.instance = null;
                     Destroy(_singletonObj);
-
                 }
-                life.changeScene();
             }
 
             Debug.Log(dist);
+            Debug.Log(PlayerLife.life);
         }
         //Debug.Log("tintin");
     }
