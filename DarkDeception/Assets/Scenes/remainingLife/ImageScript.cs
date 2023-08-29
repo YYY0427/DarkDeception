@@ -18,7 +18,7 @@ public class ImageScript : MonoBehaviour
         setImagePotion.x = 916 / 2 - 120;
         setImagePotion.y = 515 / 2 - 30;
 
-        for(int i = PlayerLife.life; i > 0; i--)
+        for(int i = PlayerLife.life + 1; i > 0; i--)
         {
             GameObject image = new GameObject();
             image.AddComponent<RectTransform>();
@@ -39,10 +39,17 @@ public class ImageScript : MonoBehaviour
 
     }
 
+    private float time;
+    public static float coutTime;
+
     // Update is called once per frame
     void Update()
     {
-        if(flashing.coutTime <= 4.0f)
+
+        time += Time.deltaTime;
+        coutTime = time;
+
+        if(time <= 4.0f)
         {
             flashing.instance.flachingUpdate();
         }

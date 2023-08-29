@@ -12,8 +12,6 @@ public class flashing : MonoBehaviour
     GameObject lastImage;
 
     private float cycle = 1;
-    private float time;
-    public static float coutTime;
 
     // Start is called before the first frame update
     void Start()
@@ -28,13 +26,10 @@ public class flashing : MonoBehaviour
     {
         lastImage = ImageScript.lastImage;
 
-        time += Time.deltaTime;
-        coutTime = time;
-        var repeatValue = Mathf.Repeat(time, cycle);
+        var repeatValue = Mathf.Repeat(ImageScript.coutTime, cycle);
 
         target = lastImage.GetComponent<Image>();
 
         target.enabled = repeatValue >= cycle * 0.5f;
     }
-
 }

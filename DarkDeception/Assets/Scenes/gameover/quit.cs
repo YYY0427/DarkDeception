@@ -22,6 +22,7 @@ public class quit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnClickStartButton()
     {
+        PlayerLife.life = 3;
         StartCoroutine(nameof(LoadScene));
     }
 
