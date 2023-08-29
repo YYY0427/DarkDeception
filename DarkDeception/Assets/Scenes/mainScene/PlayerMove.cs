@@ -8,28 +8,32 @@ public class PlayerMove : MonoBehaviour
 {
     CharacterController con;
 
-    [SerializeField] private GameObject[] enemyObj = new GameObject[4];
+    [SerializeField] private GameObject[] enemyObj = new GameObject[5];
 
-    public float walkSpeed = 5.0f;  // ’Êí‚ÌˆÚ“®‘¬“x
-    public float dashSpeed = 10.0f; // ƒ_ƒbƒVƒ…‚ÌˆÚ“®‘¬“x
-    private float currentSpeed; // Œ»İ‚ÌˆÚ“®‘¬“x
-    public float gravity = 10f;    // d—Í‚Ì‘å‚«‚³
+    public float walkSpeed = 5.0f;  // é€šå¸¸ã®ç§»å‹•é€Ÿåº¦
+    public float dashSpeed = 10.0f; // ãƒ€ãƒƒã‚·ãƒ¥æ™‚ã®ç§»å‹•é€Ÿåº¦
+    private float currentSpeed; // ç¾åœ¨ã®ç§»å‹•é€Ÿåº¦
+    public float gravity = 10f;    // é‡åŠ›ã®å¤§ãã•
 
-    public float sensitivity = 2.0f; // ƒ}ƒEƒXŠ´“x
-    public float smoothing = 2.0f;   // ƒXƒ€[ƒWƒ“ƒO
+    public float sensitivity = 2.0f; // ãƒã‚¦ã‚¹æ„Ÿåº¦
+    public float smoothing = 2.0f;   // ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°
 
-    private Vector2 mouseLook;       // ƒ}ƒEƒX‚ÌŒü‚«
-    private Vector2 smoothV;         // ƒXƒ€[ƒWƒ“ƒO—p
+    private Vector2 mouseLook;       // ãƒã‚¦ã‚¹ã®å‘ã
+    private Vector2 smoothV;         // ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°ç”¨
 
-    Vector3 moveDirection = Vector3.zero; // ˆÚ“®ƒxƒNƒgƒ‹
+    Vector3 moveDirection = Vector3.zero; // ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«
 
     PlayerLife life = new PlayerLife();
 
     GameObject _singletonObj;
 
+    public static int _enemyKind; // å€’ã•ã‚ŒãŸã¨ãæ•µã‚’è¨˜æ†¶ã™ã‚‹ãŸã‚ã®å¤‰æ•°
+
     // Start is called before the first frame update
     void Start()
     {
+        // enemyObj[4] = GameObject.Find("Transparent");
+        _enemyKind = 1;
         con = GetComponent<CharacterController>();
         _singletonObj = GameObject.Find("Singleton");
         Debug.Log(_singletonObj.name);
@@ -38,17 +42,16 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        // ƒ}ƒEƒX‚Ì“ü—Í‚ğæ“¾
+        // ãƒã‚¦ã‚¹ã®å…¥åŠ›ã‚’å–å¾—
         Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
-        // ƒXƒ€[ƒWƒ“ƒO
+        // ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°
         mouseDelta = Vector2.Scale(mouseDelta, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
         smoothV.x = Mathf.Lerp(smoothV.x, mouseDelta.x, 1f / smoothing);
         smoothV.y = Mathf.Lerp(smoothV.y, mouseDelta.y, 1f / smoothing);
         mouseLook += smoothV;
 
-        // ã‰º•ûŒü‚Ì‰ñ“]‚ğ§ŒÀ
+        // ä¸Šä¸‹æ–¹å‘ã®å›è»¢ã‚’åˆ¶é™
         mouseLook.y = Mathf.Clamp(mouseLook.y, -85f, 85f);
         if (GameOver.gameOver)
         {
@@ -56,35 +59,35 @@ public class PlayerMove : MonoBehaviour
             mouseLook.y = Mathf.Clamp(mouseLook.y, 0, 0);
         }
 
-        // ƒJƒƒ‰‚ÆƒvƒŒƒCƒ„[‚ÌŒü‚«‚ğXV
+        // ã‚«ãƒ¡ãƒ©ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å‘ãã‚’æ›´æ–°
         //transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
         //transform.localRotation = Quaternion.AngleAxis(mouseLook.x, Vector3.up);
         transform.localRotation = Quaternion.Euler(-mouseLook.y, mouseLook.x, 0);
 
         float newRotationY = mouseLook.y + 180f;
 
-        // ƒ}ƒEƒXƒzƒC[ƒ‹‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN
+        // ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯
         bool isWheelCrick = Input.GetMouseButtonDown(2);
 
-        // Todo:ƒzƒC[ƒ‹ƒNƒŠƒbƒN‚Í‹“_‚ğ180‹”½‘Î•ûŒü‚É‰ñ“]‚³‚¹‚é
+        // Todo:ãƒ›ã‚¤ãƒ¼ãƒ«ã‚¯ãƒªãƒƒã‚¯æ™‚ã¯è¦–ç‚¹ã‚’180Â°åå¯¾æ–¹å‘ã«å›è»¢ã•ã›ã‚‹
         mouseLook.x = isWheelCrick ? mouseLook.x + newRotationY : mouseLook.x;
 
 
 
-        // ˆÚ“®‘¬“x‚ğæ“¾
+        // ç§»å‹•é€Ÿåº¦ã‚’å–å¾—
         float speed = Input.GetKey(KeyCode.LeftShift) ? dashSpeed : walkSpeed;
 
-        float horizontalInput = Input.GetAxis("Horizontal");    // a‚Æs
-        float verticalInput = Input.GetAxis("Vertical");        // w‚Æs
+        float horizontalInput = Input.GetAxis("Horizontal");    // aã¨s
+        float verticalInput = Input.GetAxis("Vertical");        // wã¨s
 
-        // ƒJƒƒ‰‚ÌŒü‚«‚ğŠî€‚É‚µ‚½³–Ê•ûŒü‚ÌƒxƒNƒgƒ‹
+        // ã‚«ãƒ¡ãƒ©ã®å‘ãã‚’åŸºæº–ã«ã—ãŸæ­£é¢æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«
         Vector3 cameraForward = Vector3.Scale(transform.forward, new Vector3(1, 0, 1)).normalized;
 
-        // ‘OŒã¶‰E‚Ì“ü—ÍiWASDƒL[j‚©‚çAˆÚ“®‚Ì‚½‚ß‚ÌƒxƒNƒgƒ‹‚ğŒvZ
-        // Input.GetAxis("Vertical") ‚Í‘OŒãiWSƒL[j‚Ì“ü—Í’l
-        // Input.GetAxis("Horizontal") ‚Í¶‰EiADƒL[j‚Ì“ü—Í’l
-        Vector3 moveZ = cameraForward * Input.GetAxis("Vertical") * speed;  //@‘OŒãiƒJƒƒ‰Šî€j@ 
-        Vector3 moveX = transform.right * Input.GetAxis("Horizontal") * speed; // ¶‰EiƒJƒƒ‰Šî€j
+        // å‰å¾Œå·¦å³ã®å…¥åŠ›ï¼ˆWASDã‚­ãƒ¼ï¼‰ã‹ã‚‰ã€ç§»å‹•ã®ãŸã‚ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—
+        // Input.GetAxis("Vertical") ã¯å‰å¾Œï¼ˆWSã‚­ãƒ¼ï¼‰ã®å…¥åŠ›å€¤
+        // Input.GetAxis("Horizontal") ã¯å·¦å³ï¼ˆADã‚­ãƒ¼ï¼‰ã®å…¥åŠ›å€¤
+        Vector3 moveZ = cameraForward * Input.GetAxis("Vertical") * speed;  //ã€€å‰å¾Œï¼ˆã‚«ãƒ¡ãƒ©åŸºæº–ï¼‰ã€€ 
+        Vector3 moveX = transform.right * Input.GetAxis("Horizontal") * speed; // å·¦å³ï¼ˆã‚«ãƒ¡ãƒ©åŸºæº–ï¼‰
 
         Vector3 move = (moveZ + moveX);
 
@@ -93,20 +96,22 @@ public class PlayerMove : MonoBehaviour
             move = move.normalized * speed;
         }
 
-        // ’n–Ê‚É‚¢‚é‚©‚Ç‚¤‚©
+        // åœ°é¢ã«ã„ã‚‹ã‹ã©ã†ã‹
         if (con.isGrounded)
         {
             moveDirection = move;
         }
         else
         {
-            // d—Í‚ğŒø‚©‚¹‚é
+            // é‡åŠ›ã‚’åŠ¹ã‹ã›ã‚‹
             moveDirection = move + new Vector3(0, moveDirection.y, 0);
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
-        // Move ‚Íw’è‚µ‚½ƒxƒNƒgƒ‹‚¾‚¯ˆÚ“®‚³‚¹‚é–½—ß
+        // Move ã¯æŒ‡å®šã—ãŸãƒ™ã‚¯ãƒˆãƒ«ã ã‘ç§»å‹•ã•ã›ã‚‹å‘½ä»¤
         con.Move(moveDirection * Time.deltaTime);
+
+
 
         if (Input.GetKey(KeyCode.Return))
         {
@@ -119,6 +124,7 @@ public class PlayerMove : MonoBehaviour
 
             }
         }
+
 
         for (int i = 0; i < enemyObj.Length; i++)
         {
@@ -138,6 +144,13 @@ public class PlayerMove : MonoBehaviour
                     SingletonScript.instance = null;
                     Destroy(_singletonObj);
                 }
+
+                //life.changeScene();
+                _enemyKind = i;
+                
+                SceneManager.LoadScene("KnockDownScene");
+
+
             }
 
             Debug.Log(dist);
@@ -150,16 +163,16 @@ public class PlayerMove : MonoBehaviour
 public class PlayerLife
 {
     public static int life = 3;
-    public void changeScene()
+    static public void changeScene()
     {
 
         if (life <= 0)
         {
-            SceneManager.LoadScene("KnockDownScene");
+            SceneManager.LoadScene("gameoverScene");
         }
         else
         {
-            SceneManager.LoadScene("KnockDownScene");
+            SceneManager.LoadScene("RemainingLifeScene");
         }
     }
 
