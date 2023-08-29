@@ -8,7 +8,7 @@ public class PlayerMove : MonoBehaviour
 {
     CharacterController con;
 
-    [SerializeField] private GameObject[] enemyObj = new GameObject[4];
+    [SerializeField] private GameObject[] enemyObj = new GameObject[5];
 
     public float walkSpeed = 5.0f;  // 通常の移動速度
     public float dashSpeed = 10.0f; // ダッシュ時の移動速度
@@ -27,9 +27,13 @@ public class PlayerMove : MonoBehaviour
 
     GameObject _singletonObj;
 
+    public static int _enemyKind; // 倒されたとき敵を記憶するための変数
+
     // Start is called before the first frame update
     void Start()
     {
+        // enemyObj[4] = GameObject.Find("Transparent");
+        _enemyKind = 1;
         con = GetComponent<CharacterController>();
         _singletonObj = GameObject.Find("Singleton");
         Debug.Log(_singletonObj.name);
@@ -38,7 +42,6 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         // マウスの入力を取得
         Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
@@ -108,18 +111,6 @@ public class PlayerMove : MonoBehaviour
         // Move は指定したベクトルだけ移動させる命令
         con.Move(moveDirection * Time.deltaTime);
 
-        if (Input.GetKey(KeyCode.Return))
-        {
-            life.lifeDecrease();
-            if (PlayerLife.life <= 0)
-            {
-                SingletonScript.instance = null;
-                Destroy(_singletonObj);
-
-            }
-            life.changeScene();
-        }
-
         for (int i = 0; i < enemyObj.Length; i++)
         {
             Vector3 playerToEnemy = (enemyObj[i].transform.position -
@@ -138,7 +129,10 @@ public class PlayerMove : MonoBehaviour
                     Destroy(_singletonObj);
 
                 }
-                life.changeScene();
+                //life.changeScene();
+                _enemyKind = i;
+                
+                SceneManager.LoadScene("KnockDownScene");
             }
 
             Debug.Log(dist);
@@ -150,16 +144,16 @@ public class PlayerMove : MonoBehaviour
 public class PlayerLife
 {
     public static int life = 3;
-    public void changeScene()
+    static public void changeScene()
     {
 
         if (life <= 0)
         {
-            SceneManager.LoadScene("KnockDownScene");
+            SceneManager.LoadScene("gameoverScene");
         }
         else
         {
-            SceneManager.LoadScene("KnockDownScene");
+            SceneManager.LoadScene("RemainingLifeScene");
         }
     }
 
