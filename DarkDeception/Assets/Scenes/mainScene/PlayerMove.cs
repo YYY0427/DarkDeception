@@ -115,7 +115,7 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Return))
         {
-            life.changeScene();
+            //life.changeScene();
             life.lifeDecrease();
             if (PlayerLife.life <= 0)
             {
@@ -137,7 +137,7 @@ public class PlayerMove : MonoBehaviour
             {
                 GameOver.gameOver = true;
                 GameOver.enemyObj = enemyObj[i];
-                life.changeScene();
+                //life.changeScene();
                 life.lifeDecrease();
                 if (PlayerLife.life <= 0)
                 {
