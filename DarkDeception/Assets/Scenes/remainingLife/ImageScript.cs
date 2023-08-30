@@ -44,22 +44,23 @@ public class ImageScript : MonoBehaviour
     }
 
     private float time;
-    public static float coutTime;
+    public static float countTime;
 
     // Update is called once per frame
     void Update()
     {
 
         time += Time.deltaTime;
-        coutTime = time;
+        countTime = time;
 
-        if(time <= 2.0f)
+        if (time <= 2.0f)
         {
             //flashing.instance.flachingUpdate();
         }
         else if(lastImage != null)
         {
             DamageDirection.instance.Damage();
+            SE.Instance.daggerSound();
             Destroy(lastImage);
             StartCoroutine(nameof(LoadScene));
         }
