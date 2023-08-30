@@ -22,6 +22,7 @@ public class flashing : MonoBehaviour
         }
     }
 
+    //“_–Å
     public void flachingUpdate()
     {
         lastImage = ImageScript.lastImage;

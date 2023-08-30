@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ImageScript : MonoBehaviour
 {
     GameObject canvas;
     public static GameObject lastImage;
     public Sprite bone;
+    public GameObject _fadePrefab;
+
+    readonly float _fadeSpeed = 1f;
 
     private Vector3 setImagePotion;
 
@@ -15,7 +19,7 @@ public class ImageScript : MonoBehaviour
     void Start()
     {
         canvas = GameObject.Find("Canvas");
-        setImagePotion.x = 916 / 2 - 120;
+        setImagePotion.x = 916 / 2 - 116.5f;
         setImagePotion.y = 515 / 2 - 30;
 
         for(int i = PlayerLife.life + 1; i > 0; i--)
@@ -49,13 +53,23 @@ public class ImageScript : MonoBehaviour
         time += Time.deltaTime;
         coutTime = time;
 
-        if(time <= 4.0f)
+        if(time <= 2.0f)
         {
-            flashing.instance.flachingUpdate();
+            //flashing.instance.flachingUpdate();
         }
         else if(lastImage != null)
         {
+            DamageDirection.instance.Damage();
             Destroy(lastImage);
+            StartCoroutine(nameof(LoadScene));
         }
     }
+
+    IEnumerator LoadScene()
+    {
+        Instantiate(_fadePrefab);
+        yield return new WaitForSeconds(_fadeSpeed);
+        SceneManager.LoadScene("SceneMain");
+    }
+
 }
