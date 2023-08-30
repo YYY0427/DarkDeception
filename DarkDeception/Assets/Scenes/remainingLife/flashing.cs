@@ -27,7 +27,7 @@ public class flashing : MonoBehaviour
     {
         lastImage = ImageScript.lastImage;
 
-        var repeatValue = Mathf.Repeat(ImageScript.coutTime, cycle);
+        var repeatValue = Mathf.Repeat(ImageScript.countTime, cycle);
 
         target = lastImage.GetComponent<Image>();
 
