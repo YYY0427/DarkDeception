@@ -14,7 +14,7 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] int destPoint = 0;
     private NavMeshAgent agent;
 
-
+   Animator animator;
 
     Vector3 playerPos;
     GameObject player;
@@ -27,6 +27,7 @@ public class EnemyMove : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
 
         // autoBraking を無効にすると、目標地点の間を継続的に移動します
         //(つまり、エージェントは目標地点に近づいても
@@ -65,7 +66,10 @@ public class EnemyMove : MonoBehaviour
         {
             //追跡の時、quitRangeより距離が離れたら中止
             if (distance > quitRange)
+            {
                 tracking = false;
+                animator.SetTrigger("normal");
+            }
 
             //Playerを目標とする
             agent.destination = playerPos;
@@ -74,7 +78,10 @@ public class EnemyMove : MonoBehaviour
         {
             //PlayerがtrackingRangeより近づいたら追跡開始
             if (distance < trackingRange)
+            {
                 tracking = true;
+                animator.SetTrigger("fly");
+            }
 
 
             // エージェントが現目標地点に近づいてきたら、
