@@ -154,9 +154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Cube: {fileID: 5803979485628146340, guid: 7cb73e573ab5f0447887ae4a5bcd8b64, type: 3}
   enemyObj:
-  - {fileID: 4581718618250850183, guid: 8146374d820c3ac45baeed5014144363, type: 3}
-  - {fileID: 466174982370493815, guid: 7577e3de9babd604d9880ded032d1752, type: 3}
-  - {fileID: 25901200661331521, guid: aaf0bae1b4fe202469a91f418e19fa04, type: 3}
+  - {fileID: 466174982370493815, guid: fee81ae4196c7234abc0a5ef182a5b61, type: 3}
+  - {fileID: 25901200661331521, guid: c83a69617e2904c41b3aa105f5efb96f, type: 3}
+  - {fileID: 4581718618250850183, guid: efec36b0a6823164285bd15acaef4c7e, type: 3}
   - {fileID: 466174982370493815, guid: 7577e3de9babd604d9880ded032d1752, type: 3}
   - {fileID: 4581718618250850183, guid: 8146374d820c3ac45baeed5014144363, type: 3}
 --- !u!4 &107229005
@@ -167,7 +167,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107229003}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.53, z: -1.66}
+  m_LocalPosition: {x: 0, y: -0.28, z: -3.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
