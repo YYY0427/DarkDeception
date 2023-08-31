@@ -13,7 +13,7 @@ public class EnemyStaging : MonoBehaviour
 
     void Start()
     {
-        enemyKind = PlayerMove._enemyKind;
+        enemyKind = MovePlayer._enemyKind;
 
         //enemyKind = 1;
 
