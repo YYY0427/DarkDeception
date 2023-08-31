@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveEnemy : MonoBehaviour
+public class MovePerformanceEnemy : MonoBehaviour
 {
     // Start is called before the first frame update
     GameObject cameraObj;
@@ -19,13 +19,9 @@ public class MoveEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_enemyObj.transform.position.y < 0)
+        if (_enemyObj.transform.position.y < -5)
         {
-            _enemyObj.transform.Translate(0, 0.007f, 0);
+            _enemyObj.transform.Translate(0, 0.05f, 0);
         }
-
-        //Debug.Log(_Cube.transform.position);
-
-        Debug.Log(_enemyObj.transform.position);
     }
 }
