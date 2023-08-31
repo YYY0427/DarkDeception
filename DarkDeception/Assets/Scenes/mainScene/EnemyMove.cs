@@ -15,6 +15,7 @@ public class EnemyMove : MonoBehaviour
     private NavMeshAgent agent;
 
     private Animator animator;
+    AnimatorStateInfo stateInfo;
 
     Vector3 playerPos;
     GameObject player;
@@ -24,10 +25,13 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] bool tracking = false;
     [SerializeField] float trackigHeight = 10f;
 
+    int timer = 0;
+    bool isGoal = false;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
+        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         // autoBraking を無効にすると、目標地点の間を継続的に移動します
         //(つまり、エージェントは目標地点に近づいても
@@ -83,11 +87,30 @@ public class EnemyMove : MonoBehaviour
                 animator.SetTrigger("fly");
             }
 
-
             // エージェントが現目標地点に近づいてきたら、
             // 次の目標地点を選択します
-            if (!agent.pathPending && agent.remainingDistance < 0.5f)
-                GotoNextPoint();
+            if (!agent.pathPending && agent.remainingDistance < 0.5f && !isGoal)
+            {
+                Debug.Log("なんでお前通るんや");
+                isGoal = true;
+                agent.speed = 0f;
+                agent.updateRotation = false;    
+                animator.SetTrigger("look");
+
+            }
+            if(isGoal)
+            {
+                timer++;
+                if (timer > 750)
+                {
+                    timer = 0;
+                    isGoal = false;
+                    agent.speed = 20f;
+                    agent.updateRotation = true;
+                    animator.SetTrigger("normal");
+                    GotoNextPoint();
+                }
+            }
         }
     }
 
