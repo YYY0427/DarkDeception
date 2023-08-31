@@ -33,8 +33,9 @@ public class reopen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _text.color = new Color(0.68f, 0.68f, 0.69f, 1.0f);
-        _text.fontSize = 24;
+        //_text.color = new Color(0.68f, 0.68f, 0.69f, 1.0f);
+        _text.color = new Color(0.86f, 0.86f, 0.86f, 1.0f);
+        _text.fontSize = 30;
     }
 
     IEnumerator LoadScene()
