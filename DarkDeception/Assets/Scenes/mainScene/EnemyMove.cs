@@ -14,7 +14,7 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] int destPoint = 0;
     private NavMeshAgent agent;
 
-   Animator animator;
+    private Animator animator;
 
     Vector3 playerPos;
     GameObject player;
@@ -27,7 +27,7 @@ public class EnemyMove : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
         // autoBraking を無効にすると、目標地点の間を継続的に移動します
         //(つまり、エージェントは目標地点に近づいても
