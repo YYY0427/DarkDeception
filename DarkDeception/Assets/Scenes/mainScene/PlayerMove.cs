@@ -113,17 +113,17 @@ public class PlayerMove : MonoBehaviour
 
 
 
-        //if (Input.GetKey(KeyCode.Return))
-        //{
-        //    life.changeScene();
-        //    life.lifeDecrease();
-        //    if (PlayerLife.life <= 0)
-        //    {
-        //        SingletonScript.instance = null;
-        //        Destroy(_singletonObj);
+        if (Input.GetKey(KeyCode.Return))
+        {
+            life.changeScene();
+            life.lifeDecrease();
+            if (PlayerLife.life <= 0)
+            {
+                SingletonScript.instance = null;
+                Destroy(_singletonObj);
 
-        //    }
-        //}
+            }
+        }
 
 
         for (int i = 0; i < enemyObj.Length; i++)
@@ -164,7 +164,7 @@ public class PlayerLife
 {
     public static int life = 3;
 
-    public static void changeScene()
+    public void changeScene()
     {
 
         if (life <= 0)
