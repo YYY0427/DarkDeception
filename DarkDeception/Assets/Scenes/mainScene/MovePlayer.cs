@@ -1,145 +1,185 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
-//public class MovePlayer : MonoBehaviour
-//{
-//    public Transform target; // ’‹‘ÎÛ‚ÌTransformi’Êí‚ÍƒvƒŒƒCƒ„[ƒIƒuƒWƒFƒNƒgj
-//    private Rigidbody rb;
+public class MovePlayer : MonoBehaviour
+{
+    CharacterController con;
 
-//    public float sensitivity = 2.0f; // ƒ}ƒEƒXŠ´“x
-//    public float smoothing = 2.0f;   // ƒXƒ€[ƒWƒ“ƒO
+    [SerializeField] private GameObject[] enemyObj = new GameObject[5];
 
-//    private Vector2 mouseLook;       // ƒ}ƒEƒX‚ÌŒü‚«
-//    private Vector2 smoothV;         // ƒXƒ€[ƒWƒ“ƒO—p
+    public float walkSpeed = 5.0f;  // é€šå¸¸ã®ç§»å‹•é€Ÿåº¦
+    public float dashSpeed = 10.0f; // ãƒ€ãƒƒã‚·ãƒ¥æ™‚ã®ç§»å‹•é€Ÿåº¦
+    private float currentSpeed; // ç¾åœ¨ã®ç§»å‹•é€Ÿåº¦
+    public float gravity = 10f;    // é‡åŠ›ã®å¤§ãã•
 
-//    public float walkSpeed = 5.0f;  // ’Êí‚ÌˆÚ“®‘¬“x
-//    public float dashSpeed = 10.0f; // ƒ_ƒbƒVƒ…‚ÌˆÚ“®‘¬“x
-//    public float dashDuration = 1.0f; // ƒ_ƒbƒVƒ…‚Ì‘±ŠÔ
+    public float sensitivity = 2.0f; // ãƒã‚¦ã‚¹æ„Ÿåº¦
+    public float smoothing = 2.0f;   // ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°
 
-//    private float currentSpeed; // Œ»İ‚ÌˆÚ“®‘¬“x
+    private Vector2 mouseLook;       // ãƒã‚¦ã‚¹ã®å‘ã
+    private Vector2 smoothV;         // ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°ç”¨
 
-//    PlayerLife life = new PlayerLife();
+    Vector3 moveDirection = Vector3.zero; // ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«
 
-//    GameObject _singletonObj;
+    PlayerLife life = new PlayerLife();
 
-//    private void Start()
-//    {
-//        _singletonObj = GameObject.Find("Singleton");
-//        rb = this.GetComponent<Rigidbody>();  // rigidbody‚ğæ“¾
-//    }
+    GameObject _singletonObj;
 
-//    void Update()
-//    {
-//        // ƒ}ƒEƒX‚Ì“ü—Í‚ğæ“¾
-//        Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+    public static int _enemyKind; // å€’ã•ã‚ŒãŸã¨ãæ•µã‚’è¨˜æ†¶ã™ã‚‹ãŸã‚ã®å¤‰æ•°
 
-//        // ƒXƒ€[ƒWƒ“ƒO
-//        mouseDelta = Vector2.Scale(mouseDelta, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
-//        smoothV.x = Mathf.Lerp(smoothV.x, mouseDelta.x, 1f / smoothing);
-//        smoothV.y = Mathf.Lerp(smoothV.y, mouseDelta.y, 1f / smoothing);
-//        mouseLook += smoothV;
+    // Start is called before the first frame update
+    void Start()
+    {
+        // enemyObj[4] = GameObject.Find("Transparent");
+        _enemyKind = 1;
+        con = GetComponent<CharacterController>();
+        _singletonObj = GameObject.Find("Singleton");
+        Debug.Log(_singletonObj.name);
+    }
 
-//        // ã‰º•ûŒü‚Ì‰ñ“]‚ğ§ŒÀ
-//        mouseLook.y = Mathf.Clamp(mouseLook.y, -90f, 90f);
-//        //   mouseLook.x = Mathf.Clamp(mouseLook.x, -90f, 90f);
+    // Update is called once per frame
+    void Update()
+    {
+        // ãƒã‚¦ã‚¹ã®å…¥åŠ›ã‚’å–å¾—
+        Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
-//        // ƒJƒƒ‰‚ÆƒvƒŒƒCƒ„[‚ÌŒü‚«‚ğXV
-//        transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
-//        transform.localRotation = Quaternion.AngleAxis(mouseLook.x, Vector3.up);
+        // ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°
+        mouseDelta = Vector2.Scale(mouseDelta, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
+        smoothV.x = Mathf.Lerp(smoothV.x, mouseDelta.x, 1f / smoothing);
+        smoothV.y = Mathf.Lerp(smoothV.y, mouseDelta.y, 1f / smoothing);
+        mouseLook += smoothV;
 
-//        float newRotationY = mouseLook.y + 180f;
+        // ä¸Šä¸‹æ–¹å‘ã®å›è»¢ã‚’åˆ¶é™
+        mouseLook.y = Mathf.Clamp(mouseLook.y, -85f, 85f);
+        if (GameOver.gameOver)
+        {
+            //mouseLook.x = Mathf.Clamp(mouseLook.x, -90f, 90f);
+            mouseLook.y = Mathf.Clamp(mouseLook.y, 0, 0);
+        }
 
-//        // ƒ}ƒEƒXƒzƒC[ƒ‹‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN
-//        bool isWheelCrick = Input.GetMouseButtonDown(2);
+        // ã‚«ãƒ¡ãƒ©ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å‘ãã‚’æ›´æ–°
+        //transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
+        //transform.localRotation = Quaternion.AngleAxis(mouseLook.x, Vector3.up);
+        transform.localRotation = Quaternion.Euler(-mouseLook.y, mouseLook.x, 0);
 
-//        // Todo:ƒzƒC[ƒ‹ƒNƒŠƒbƒN‚Í‹“_‚ğ180‹”½‘Î•ûŒü‚É‰ñ“]‚³‚¹‚é
-//        mouseLook.x = isWheelCrick ? mouseLook.x + newRotationY : mouseLook.x;
+        float newRotationY = mouseLook.y + 180f;
 
-//        float horizontalInput = Input.GetAxis("Horizontal");    // a‚Æs
-//        float verticalInput = Input.GetAxis("Vertical");        // w‚Æs
+        // ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯
+        bool isWheelCrick = Input.GetMouseButtonDown(2);
 
-//        if (horizontalInput == 0 && verticalInput == 0)
-//        {
-//            Stop();
-//        }
-
-//        Vector3 moveDirection = new Vector3(horizontalInput, 0.0f, horizontalInput);
-//        Vector3 moveDirection2 = new Vector3(verticalInput, 0.0f, verticalInput);
-
-//        // ShiftƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN
-//        bool isDashing = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-
-//        // ƒ_ƒbƒVƒ…’†‚Íƒ_ƒbƒVƒ…‘¬“xA‚»‚¤‚Å‚È‚¯‚ê‚Î’Êí‚Ì‘¬“x‚ğg—p
-//        currentSpeed = isDashing ? dashSpeed : walkSpeed;
-
-//        // ˆÚ“®ƒxƒNƒgƒ‹‚É‘¬“x‚ğ‚©‚¯‚ÄˆÚ“®
-//        //   transform.Translate(moveDirection.normalized * currentSpeed * Time.deltaTime);
-//        rb.AddForce(Vector3.Scale(transform.forward, moveDirection2.normalized) * currentSpeed/** Time.deltaTime*/, ForceMode.Force);
-//        rb.AddForce(Vector3.Scale(transform.right, moveDirection.normalized) * currentSpeed/** Time.deltaTime*/, ForceMode.Force);
-
-//        if(rb.velocity.magnitude > currentSpeed)
-//        {
-//            rb.velocity = rb.velocity.normalized * currentSpeed;
-//        }
+        // Todo:ãƒ›ã‚¤ãƒ¼ãƒ«ã‚¯ãƒªãƒƒã‚¯æ™‚ã¯è¦–ç‚¹ã‚’180Â°åå¯¾æ–¹å‘ã«å›è»¢ã•ã›ã‚‹
+        mouseLook.x = isWheelCrick ? mouseLook.x + newRotationY : mouseLook.x;
 
 
-//        if (Input.GetKey(KeyCode.Return))
-//        {
-//            life.lifeDecrease();
-//            if (PlayerLife.life <= 0)
-//            {
-//                SingletonScript.instance = null;
-//                Destroy(_singletonObj);
 
-//            }
-//            life.changeScene();
-//        }
-//    }
+        // ç§»å‹•é€Ÿåº¦ã‚’å–å¾—
+        float speed = Input.GetKey(KeyCode.LeftShift) ? dashSpeed : walkSpeed;
 
-//    private void OnCollisionEnter(Collision collision)
-//    {
-//        if (collision.gameObject.tag == "Enemy")
-//        {
-//            life.lifeDecrease();
-//            if (PlayerLife.life <= 0)
-//            {
-//                SingletonScript.instance = null;
-//                Destroy(_singletonObj);
+        float horizontalInput = Input.GetAxis("Horizontal");    // aã¨s
+        float verticalInput = Input.GetAxis("Vertical");        // wã¨s
 
-//            }
-//            life.changeScene();
-//        }
-//    }
-//    private void Stop()
-//    {
-//        rb.velocity = new Vector3(0, rb.velocity.y, 0);
-//        rb.angularVelocity = new Vector3(0, rb.angularVelocity.y, 0);
-//        //    rb.velocity = Vector3.zero;
-//        //    rb.angularVelocity = Vector3.zero;
-//    }
-//}
+        // ã‚«ãƒ¡ãƒ©ã®å‘ãã‚’åŸºæº–ã«ã—ãŸæ­£é¢æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«
+        Vector3 cameraForward = Vector3.Scale(transform.forward, new Vector3(1, 0, 1)).normalized;
 
-//public class PlayerLife
-//{
-//    public static int life = 3;
-//    public void changeScene()
-//    {
+        // å‰å¾Œå·¦å³ã®å…¥åŠ›ï¼ˆWASDã‚­ãƒ¼ï¼‰ã‹ã‚‰ã€ç§»å‹•ã®ãŸã‚ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—
+        // Input.GetAxis("Vertical") ã¯å‰å¾Œï¼ˆWSã‚­ãƒ¼ï¼‰ã®å…¥åŠ›å€¤
+        // Input.GetAxis("Horizontal") ã¯å·¦å³ï¼ˆADã‚­ãƒ¼ï¼‰ã®å…¥åŠ›å€¤
+        Vector3 moveZ = cameraForward * Input.GetAxis("Vertical") * speed;  //ã€€å‰å¾Œï¼ˆã‚«ãƒ¡ãƒ©åŸºæº–ï¼‰ã€€ 
+        Vector3 moveX = transform.right * Input.GetAxis("Horizontal") * speed; // å·¦å³ï¼ˆã‚«ãƒ¡ãƒ©åŸºæº–ï¼‰
 
-//        if (life <= 0)
-//        {
-//            SceneManager.LoadScene("gameoverScene");
-//        }
-//        else
-//        {
-//            SceneManager.LoadScene("RemainingLifeScene");
-//        }
-//    }
+        Vector3 move = (moveZ + moveX);
 
-//    public void lifeDecrease()
-//    {
-//        life = System.Math.Max(life - 1, 0);
-//    }
+        if (move.magnitude > speed)
+        {
+            move = move.normalized * speed;
+        }
 
-//}
+        // åœ°é¢ã«ã„ã‚‹ã‹ã©ã†ã‹
+        if (con.isGrounded)
+        {
+            moveDirection = move;
+        }
+        else
+        {
+            // é‡åŠ›ã‚’åŠ¹ã‹ã›ã‚‹
+            moveDirection = move + new Vector3(0, moveDirection.y, 0);
+            moveDirection.y -= gravity * Time.deltaTime;
+        }
+
+        // Move ã¯æŒ‡å®šã—ãŸãƒ™ã‚¯ãƒˆãƒ«ã ã‘ç§»å‹•ã•ã›ã‚‹å‘½ä»¤
+        con.Move(moveDirection * Time.deltaTime);
+
+
+
+        //if (Input.GetKey(KeyCode.Return))
+        //{
+        //    life.changeScene();
+        //    life.lifeDecrease();
+        //    if (PlayerLife.life <= 0)
+        //    {
+        //        SingletonScript.instance = null;
+        //        Destroy(_singletonObj);
+
+        //    }
+        //}
+
+
+        for (int i = 0; i < enemyObj.Length; i++)
+        {
+            Vector3 playerToEnemy = (enemyObj[i].transform.position -
+                this.transform.position);
+
+            float dist = Mathf.Abs(playerToEnemy.magnitude);
+
+            if (dist < Mathf.Abs(12.0f) && !GameOver.gameOver)
+            {
+                GameOver.gameOver = true;
+                GameOver.enemyObj = enemyObj[i];
+                //life.changeScene();
+                life.lifeDecrease();
+                if (PlayerLife.life <= 0)
+                {
+                    SingletonScript.instance = null;
+                    Destroy(_singletonObj);
+                }
+
+                //life.changeScene();
+                _enemyKind = i;
+                
+                SceneManager.LoadScene("KnockDownScene");
+
+
+            }
+
+            Debug.Log(dist);
+            Debug.Log(PlayerLife.life);
+        }
+        //Debug.Log("tintin");
+    }
+}
+
+public class PlayerLife
+{
+    public static int life = 3;
+
+    public static void changeScene()
+    {
+
+        if (life <= 0)
+        {
+            SceneManager.LoadScene("gameoverScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("RemainingLifeScene");
+        }
+    }
+
+    public void lifeDecrease()
+    {
+        life = System.Math.Max(life - 1, 0);
+    }
+
+}
