@@ -5,33 +5,30 @@ using UnityEngine;
 using UnityEngine.AI;
 
 //オブジェクトにNavMeshAgentコンポーネントを設置
-[RequireComponent(typeof(NavMeshAgent))]
+//[RequireComponent(typeof(NavMeshAgent))]
 
 public class EnemyMove : MonoBehaviour
 {
-
+    public int destPoint = 0;
     public Transform[] points;
-    [SerializeField] int destPoint = 0;
-    private NavMeshAgent agent;
-
-    private Animator animator;
-    AnimatorStateInfo stateInfo;
-
-    Vector3 playerPos;
-    GameObject player;
     float distance;
-    [SerializeField] float trackingRange = 3f;
-    [SerializeField] float quitRange = 5f;
-    [SerializeField] bool tracking = false;
-    [SerializeField] float trackigHeight = 10f;
+    public float trackingRange = 3f;
+    public float quitRange = 5f;
+    public bool tracking = false;
+    public float trackigHeight = 10f;
 
-    int timer = 0;
-    bool isGoal = false;
+    private Rigidbody rb;
+    private NavMeshAgent agent;
+    private Animator animator;
+    Vector3 playerPos;
+    Vector3 targetPos;
+    GameObject player;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
-        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        rb = GetComponent<Rigidbody>();
 
         // autoBraking を無効にすると、目標地点の間を継続的に移動します
         //(つまり、エージェントは目標地点に近づいても
@@ -52,7 +49,8 @@ public class EnemyMove : MonoBehaviour
             return;
 
         // エージェントが現在設定された目標地点に行くように設定します
-        agent.destination = points[destPoint].position;
+        //    agent.destination = points[destPoint].position;
+        targetPos = points[destPoint].position;
 
         // 配列内の次の位置を目標地点に設定し、
         // 必要ならば出発地点にもどります
@@ -72,11 +70,11 @@ public class EnemyMove : MonoBehaviour
             if (distance > quitRange)
             {
                 tracking = false;
-                animator.SetTrigger("normal");
+                animator.SetTrigger("look");
             }
 
             //Playerを目標とする
-            agent.destination = playerPos;
+            targetPos = playerPos;
         }
         else
         {
@@ -89,36 +87,55 @@ public class EnemyMove : MonoBehaviour
 
             // エージェントが現目標地点に近づいてきたら、
             // 次の目標地点を選択します
-            if (!agent.pathPending && agent.remainingDistance < 0.5f && !isGoal)
+            if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
-                Debug.Log("なんでお前通るんや");
-                isGoal = true;
-                agent.speed = 0f;
-                agent.updateRotation = false;    
-                animator.SetTrigger("look");
-
-            }
-            if(isGoal)
-            {
-                timer++;
-                if (timer > 750)
-                {
-                    timer = 0;
-                    isGoal = false;
-                    agent.speed = 20f;
-                    agent.updateRotation = true;
-                    animator.SetTrigger("normal");
-                    GotoNextPoint();
-                }
+                GotoNextPoint();
             }
         }
+        DoMove(targetPos);
+    }
+
+    private void DoMove(Vector3 targetPosition)
+    {
+        if (agent && agent.enabled)
+        {
+            agent.SetDestination(targetPosition);
+
+            foreach (var pos in agent.path.corners)
+            {
+                var diff2d = new Vector2(
+                    Mathf.Abs(pos.x - transform.position.x),
+                    Mathf.Abs(pos.z - transform.position.z)
+                );
+
+                if (0.1f <= diff2d.magnitude)
+                {
+                    targetPosition = pos;
+                    break;
+                }
+            }
+
+            Debug.DrawLine(transform.position, targetPosition, Color.red);
+        }
+
+        Quaternion moveRotation = Quaternion.LookRotation(targetPosition - transform.position, Vector3.up);
+        moveRotation.z = 0;
+        moveRotation.x = 0;
+        transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, 0.1f);
+
+        float forward_x = transform.forward.x * 30.0f;
+        float forward_z = transform.forward.z * 30.0f;
+
+        rb.velocity = new Vector3(forward_x, rb.velocity.y, forward_z);
+        //rb.AddForce(rb.velocity, ForceMode.Force);
+        //rb.AddForce(new Vector3(30, 0, 30), ForceMode.Force);
     }
 
     void OnDrawGizmosSelected()
     {
         //trackingRangeの範囲を赤いワイヤーフレームで示す
         Gizmos.color = Color.red;
-        
+
         Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y + (trackigHeight / 2.0f), transform.position.z), trackingRange);
 
         //quitRangeの範囲を青いワイヤーフレームで示す
