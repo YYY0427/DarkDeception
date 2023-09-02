@@ -11,6 +11,7 @@ public class reopen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public GameObject _objText;
     public TextMeshProUGUI _text;
     public GameObject _fadePrefab;
+    public static bool clickButton;
 
     readonly float _fadeSpeed = 1f;
 
@@ -21,6 +22,7 @@ public class reopen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     public void OnClickStartButton()
    {
+        clickButton = true;
         PlayerLife.life = 3;
         StartCoroutine(nameof(LoadScene));
     }

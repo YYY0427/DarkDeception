@@ -25,4 +25,10 @@ public class SE : MonoBehaviour
     {
         audioSource.PlayOneShot(sound);
     }
+
+    public void bloodSound()
+    {
+        audioSource.PlayOneShot(sound);
+    }
+
 }
