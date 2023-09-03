@@ -23,6 +23,7 @@ public class KnockDownScript : MonoBehaviour
 
         if (_nextSceneFrame < 0)
         {
+            PlayerLife.lifeDecrease();
             PlayerLife.changeScene();
         }
         Debug.Log(_nextSceneFrame);
