@@ -23,6 +23,8 @@ public class EnemyMove : MonoBehaviour
     Vector3 playerPos;
     Vector3 targetPos;
     GameObject player;
+    float speed = 0f;
+    int timer = 0;
 
     void Start()
     {
@@ -31,9 +33,9 @@ public class EnemyMove : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         // autoBraking を無効にすると、目標地点の間を継続的に移動します
-        //(つまり、エージェントは目標地点に近づいても
-        // 速度をおとしません)
+        //(つまり、エージェントは目標地点に近づいても速度をおとしません)
         agent.autoBraking = false;
+        speed = agent.speed;
 
         GotoNextPoint();
 
@@ -49,7 +51,6 @@ public class EnemyMove : MonoBehaviour
             return;
 
         // エージェントが現在設定された目標地点に行くように設定します
-        //    agent.destination = points[destPoint].position;
         targetPos = points[destPoint].position;
 
         // 配列内の次の位置を目標地点に設定し、
@@ -90,45 +91,43 @@ public class EnemyMove : MonoBehaviour
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
                 GotoNextPoint();
+                //timer++;
+                //agent.speed = 0f;
+                //agent.updateRotation = false;
+
+                //if(timer > 120)
+                //{
+                //    timer = 0;
+                //    agent.speed = speed;
+                //    agent.updateRotation = true;
+                //    GotoNextPoint();
+                //}
             }
         }
+
         DoMove(targetPos);
     }
 
     private void DoMove(Vector3 targetPosition)
     {
-        if (agent && agent.enabled)
-        {
-            agent.SetDestination(targetPosition);
-
-            foreach (var pos in agent.path.corners)
-            {
-                var diff2d = new Vector2(
-                    Mathf.Abs(pos.x - transform.position.x),
-                    Mathf.Abs(pos.z - transform.position.z)
-                );
-
-                if (0.1f <= diff2d.magnitude)
-                {
-                    targetPosition = pos;
-                    break;
-                }
-            }
-
-            Debug.DrawLine(transform.position, targetPosition, Color.red);
-        }
+        agent.destination = targetPos; // ターゲットの設定
 
         Quaternion moveRotation = Quaternion.LookRotation(targetPosition - transform.position, Vector3.up);
         moveRotation.z = 0;
         moveRotation.x = 0;
         transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, 0.1f);
 
-        float forward_x = transform.forward.x * 30.0f;
-        float forward_z = transform.forward.z * 30.0f;
+        agent.velocity = (agent.steeringTarget - transform.position).normalized * agent.speed;
+        transform.forward = agent.steeringTarget - transform.position;
 
-        rb.velocity = new Vector3(forward_x, rb.velocity.y, forward_z);
-        //rb.AddForce(rb.velocity, ForceMode.Force);
-        //rb.AddForce(new Vector3(30, 0, 30), ForceMode.Force);
+        //if (Vector3.Distance(agent.steeringTarget, transform.position) < 1.0f)
+        //{
+        //    agent.speed = 1.0f;
+        //}
+        //else
+        //{
+        //    agent.speed = speed;
+        //}
     }
 
     void OnDrawGizmosSelected()
