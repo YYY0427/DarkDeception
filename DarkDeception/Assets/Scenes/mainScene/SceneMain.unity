@@ -1719,6 +1719,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 391120854}
     m_Modifications:
+    - target: {fileID: 466174982370493813, guid: 7577e3de9babd604d9880ded032d1752, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 466174982370493813, guid: 7577e3de9babd604d9880ded032d1752, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 466174982370493814, guid: 7577e3de9babd604d9880ded032d1752, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -3597,7 +3605,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0
+  m_Speed: 20
   m_Acceleration: 0
   avoidancePriority: 50
   m_AngularSpeed: 0
@@ -3657,7 +3665,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -9829,9 +9837,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 20
-  m_Acceleration: 8
+  m_Acceleration: 0
   avoidancePriority: 50
-  m_AngularSpeed: 200
+  m_AngularSpeed: 0
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -9885,10 +9893,10 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &681240222 stripped
 GameObject:
@@ -14084,9 +14092,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 20
-  m_Acceleration: 8
+  m_Acceleration: 0
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 0
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -28969,7 +28977,7 @@ PrefabInstance:
       objectReference: {fileID: 326784958}
     - target: {fileID: 5014801674428700091, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
       propertyPath: m_Speed
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5014801674428700091, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
       propertyPath: m_Enabled
@@ -29103,6 +29111,10 @@ PrefabInstance:
     - target: {fileID: 5870618409098741001, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870618409098741002, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
+      propertyPath: m_Constraints
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 6269168991969240342, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
       propertyPath: m_Enabled
