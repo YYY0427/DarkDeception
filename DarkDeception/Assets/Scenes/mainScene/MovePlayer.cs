@@ -137,19 +137,15 @@ public class MovePlayer : MonoBehaviour
             {
                 GameOver.gameOver = true;
                 GameOver.enemyObj = enemyObj[i];
-                //life.changeScene();
-                life.lifeDecrease();
                 if (PlayerLife.life <= 0)
                 {
                     SingletonScript.instance = null;
                     Destroy(_singletonObj);
                 }
 
-                //life.changeScene();
                 _enemyKind = i;
                 
                 SceneManager.LoadScene("KnockDownScene");
-
 
             }
 
@@ -177,7 +173,7 @@ public class PlayerLife
         }
     }
 
-    public void lifeDecrease()
+    public static void lifeDecrease()
     {
         life = System.Math.Max(life - 1, 0);
     }
