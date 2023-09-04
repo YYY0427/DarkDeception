@@ -15,7 +15,7 @@ public class EnemyStaging : MonoBehaviour
     {
         enemyKind = MovePlayer._enemyKind;
 
-        //enemyKind = 1;
+        //enemyKind = 3;
 
         _enemyObj = enemyObj[enemyKind];
 
