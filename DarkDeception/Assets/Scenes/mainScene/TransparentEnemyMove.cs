@@ -9,8 +9,12 @@ using UnityEngine.AI;
 public class TransparentEnemyMove : MonoBehaviour
 {
     private NavMeshAgent agent;
+    private Animator anim;
     Vector3 playerPos;
+    Vector3 initPos;
+    Vector3 targetPos;
     GameObject player;
+    
     float distance;
     [SerializeField] float trackingRange = 3f;
     [SerializeField] float quitRange = 5f;
@@ -20,7 +24,10 @@ public class TransparentEnemyMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        initPos = transform.position;
+        targetPos = initPos;
         agent = GetComponent<NavMeshAgent>();
+        anim = GetComponentInChildren<Animator>();
 
         // autoBraking を無効にすると、目標地点の間を継続的に移動します
         //(つまり、エージェントは目標地点に近づいても
@@ -41,28 +48,35 @@ public class TransparentEnemyMove : MonoBehaviour
         {
             //追跡の時、quitRangeより距離が離れたら中止
             if (distance > quitRange)
+            {
                 tracking = false;
-
-            //Playerを目標とする
-            agent.destination = playerPos;
+                targetPos = initPos;
+                agent.destination = targetPos;
+                anim.SetTrigger("look");
+            }
         }
         else
         {
             //PlayerがtrackingRangeより近づいたら追跡開始
             if (distance < trackingRange)
+            {
                 tracking = true;
+                targetPos = playerPos;
+                agent.destination = targetPos;
+                anim.SetTrigger("fly");
+            }
         }
+        DoMove(targetPos);
     }
 
-    void OnDrawGizmosSelected()
+    private void DoMove(Vector3 targetPosition)
     {
-        //trackingRangeの範囲を赤いワイヤーフレームで示す
-        Gizmos.color = Color.red;
+        Quaternion moveRotation = Quaternion.LookRotation(targetPosition - transform.position, Vector3.up);
+        moveRotation.z = 0;
+        moveRotation.x = 0;
+        transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, 0.1f);
 
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y + (trackigHeight / 2.0f), transform.position.z), trackingRange);
-
-        //quitRangeの範囲を青いワイヤーフレームで示す
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y + (trackigHeight / 2.0f), transform.position.z), quitRange);
+        agent.velocity = (agent.steeringTarget - transform.position).normalized * agent.speed;
+        transform.forward = agent.steeringTarget - transform.position;
     }
 }
