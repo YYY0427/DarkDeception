@@ -53,6 +53,8 @@ public class EnemyMove : MonoBehaviour
         // エージェントが現在設定された目標地点に行くように設定します
         targetPos = points[destPoint].position;
 
+        agent.destination = targetPos; // ターゲットの設定
+
         // 配列内の次の位置を目標地点に設定し、
         // 必要ならば出発地点にもどります
         destPoint = (destPoint + 1) % points.Length;
@@ -61,6 +63,7 @@ public class EnemyMove : MonoBehaviour
 
     void Update()
     {
+
         //Playerとこのオブジェクトの距離を測る
         playerPos = player.transform.position;
         distance = Vector3.Distance(new Vector3(this.transform.position.x, this.transform.position.y + (trackigHeight / 2.0f), this.transform.position.z), playerPos);
@@ -76,6 +79,8 @@ public class EnemyMove : MonoBehaviour
 
             //Playerを目標とする
             targetPos = playerPos;
+
+            agent.destination = targetPos;
         }
         else
         {
@@ -104,14 +109,11 @@ public class EnemyMove : MonoBehaviour
                 //}
             }
         }
-
-        DoMove(targetPos);
+          DoMove(targetPos);
     }
 
     private void DoMove(Vector3 targetPosition)
     {
-        agent.destination = targetPos; // ターゲットの設定
-
         Quaternion moveRotation = Quaternion.LookRotation(targetPosition - transform.position, Vector3.up);
         moveRotation.z = 0;
         moveRotation.x = 0;
@@ -120,25 +122,5 @@ public class EnemyMove : MonoBehaviour
         agent.velocity = (agent.steeringTarget - transform.position).normalized * agent.speed;
         transform.forward = agent.steeringTarget - transform.position;
 
-        //if (Vector3.Distance(agent.steeringTarget, transform.position) < 1.0f)
-        //{
-        //    agent.speed = 1.0f;
-        //}
-        //else
-        //{
-        //    agent.speed = speed;
-        //}
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        //trackingRangeの範囲を赤いワイヤーフレームで示す
-        Gizmos.color = Color.red;
-
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y + (trackigHeight / 2.0f), transform.position.z), trackingRange);
-
-        //quitRangeの範囲を青いワイヤーフレームで示す
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y + (trackigHeight / 2.0f), transform.position.z), quitRange);
     }
 }

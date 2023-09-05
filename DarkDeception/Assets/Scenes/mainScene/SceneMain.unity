@@ -10391,7 +10391,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 20
+  m_Speed: 30
   m_Acceleration: 0
   avoidancePriority: 50
   m_AngularSpeed: 0
@@ -10451,7 +10451,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!1 &681240222 stripped
 GameObject:
@@ -30665,11 +30665,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5014801674428700091, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
       propertyPath: m_Acceleration
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5014801674428700091, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
       propertyPath: m_AngularSpeed
-      value: 0
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 5377329188820410949, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
       propertyPath: m_Layer
@@ -30803,6 +30803,14 @@ PrefabInstance:
     - target: {fileID: 6269168991969240343, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269168991969240343, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
+      propertyPath: m_Acceleration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269168991969240343, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6357028915125518940, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
       propertyPath: m_Layer
