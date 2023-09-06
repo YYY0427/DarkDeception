@@ -32,7 +32,7 @@ public class NumberOfCrystalsRemaining : MonoBehaviour
         {
             count++;
         }
-        _text.text = "remaining  " + count.ToString();
+        _text.text = "" + count.ToString();
 
         if(count == 0 && fadeCount > 0)
         {
