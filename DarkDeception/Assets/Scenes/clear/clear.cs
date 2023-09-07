@@ -4,9 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using TMPro.EditorUtilities;
 
 public class clear : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public GameObject _obj;
     public GameObject _objText;
     public TextMeshProUGUI _text;
     public GameObject _fadePrefab;
@@ -33,13 +35,6 @@ public class clear : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnClickStartButton()
     {
-        StartCoroutine(nameof(LoadScene));
-    }
-
-    IEnumerator LoadScene()
-    {
-        Instantiate(_fadePrefab);
-        yield return new WaitForSeconds(_fadeSpeed);
-        SceneManager.LoadScene("titleScene");
+        _obj.GetComponent<SceneController>().sceneChange("titleScene");
     }
 }

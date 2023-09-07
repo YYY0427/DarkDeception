@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ImageScript : MonoBehaviour
 {
+    public GameObject _obj;
     GameObject canvas;
     public static GameObject lastImage;
     public Sprite bone;
@@ -14,6 +15,8 @@ public class ImageScript : MonoBehaviour
     readonly float _fadeSpeed = 1f;
 
     private Vector3 setImagePotion;
+
+    int count = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -62,15 +65,18 @@ public class ImageScript : MonoBehaviour
             DamageDirection.instance.Damage();
             SE.Instance.daggerSound();
             Destroy(lastImage);
-            StartCoroutine(nameof(LoadScene));
         }
-    }
 
-    IEnumerator LoadScene()
-    {
-        Instantiate(_fadePrefab);
-        yield return new WaitForSeconds(_fadeSpeed);
-        SceneManager.LoadScene("SceneMain");
+        if(lastImage == null)
+        {
+            if (DamageDirection.instance.alpha() < 0.05)
+            {
+                _obj.GetComponent<SceneController>().sceneChange("SceneMain");
+            }
+            Debug.Log(DamageDirection.instance.alpha());
+        }
+        
+
     }
 
 }

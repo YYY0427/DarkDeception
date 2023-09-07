@@ -41,6 +41,19 @@ public class FadeManager : MonoBehaviour
             }
             this.GetComponentInChildren<Image>().color = new Color(0.0f, 0.0f, 0.0f, alpha);
         }
+        else if (isFadeOut)
+        {
+            alpha += Time.deltaTime / fadeSpeed;
+            if(alpha >= 1.0f)
+            {
+                isFadeOut = false;
+                alpha = 1.0f;
+            }
+            this.GetComponentInChildren<Image>().color = new Color(0.0f, 0.0f, 0.0f, alpha);
+        }
+
+        Debug.Log(alpha);
+
     }
 
     public void fadeIn()

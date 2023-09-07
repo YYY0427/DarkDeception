@@ -7,9 +7,9 @@ using UnityEngine.EventSystems;
 
 public class goBack : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public GameObject _obj;
     public GameObject _objText;
     public TextMeshProUGUI _text;
-    public GameObject _fadePrefab;
 
     readonly float _fadeSpeed = 1f;
 
@@ -21,7 +21,7 @@ public class goBack : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnClickStartButton()
     {
-        StartCoroutine(nameof(LoadScene));
+        _obj.GetComponent<SceneController>().sceneChange("titleScene");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -35,12 +35,4 @@ public class goBack : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         _text.color = new Color(0.68f, 0.68f, 0.69f, 1.0f);
         _text.fontSize = 24;
     }
-
-    IEnumerator LoadScene()
-    {
-        Instantiate(_fadePrefab);
-        yield return new WaitForSeconds(_fadeSpeed);
-        SceneManager.LoadScene("titleScene");
-    }
-
 }

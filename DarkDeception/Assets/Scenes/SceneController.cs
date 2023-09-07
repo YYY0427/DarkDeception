@@ -13,7 +13,7 @@ public class SceneController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //if (!FadeManager.isFadeInstance)
+        if (!FadeManager.isFadeInstance)
         {
             Instantiate(fade);
         }
@@ -32,10 +32,4 @@ public class SceneController : MonoBehaviour
         await Task.Delay(200);
         SceneManager.LoadScene(sceneName);
     }
-
-    private void Update()
-    {
-        Debug.Log(fadeCanvas);
-    }
-
 }

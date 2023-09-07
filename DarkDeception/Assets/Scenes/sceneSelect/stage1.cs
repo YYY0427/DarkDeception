@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class stage1 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-
+    public GameObject _obj;
     public GameObject _objText;
     public TextMeshProUGUI _text;
     public GameObject _fadePrefab;
@@ -22,7 +22,7 @@ public class stage1 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnClickStartButton()
     {
-        StartCoroutine(nameof(LoadScene));
+        _obj.GetComponent<SceneController>().sceneChange("SceneMain");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -36,12 +36,4 @@ public class stage1 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         _text.color = new Color(0.68f, 0.68f, 0.69f, 1.0f);
         _text.fontSize = 24;
     }
-
-    IEnumerator LoadScene()
-    {
-        Instantiate(_fadePrefab);
-        yield return new WaitForSeconds(_fadeSpeed);
-        SceneManager.LoadScene("SceneMain");
-    }
-
 }
