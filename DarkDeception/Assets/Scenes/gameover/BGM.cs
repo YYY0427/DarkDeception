@@ -27,7 +27,6 @@ public class BGM : MonoBehaviour
         else
         {
             audio.volume = System.Math.Min(audio.volume + 0.001f, 0.3f);
-            Debug.Log(audio.volume);
         }
     }
 
