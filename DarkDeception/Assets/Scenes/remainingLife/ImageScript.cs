@@ -69,14 +69,15 @@ public class ImageScript : MonoBehaviour
 
         if(lastImage == null)
         {
-            if (DamageDirection.instance.alpha() < 0.05)
+            if(count > 0)
             {
-                _obj.GetComponent<SceneController>().sceneChange("SceneMain");
+                if (DamageDirection.instance.alpha() < 0.05)
+                {
+                    _obj.GetComponent<SceneController>().sceneChange("SceneMain");
+                    count--;
+                }
             }
-            Debug.Log(DamageDirection.instance.alpha());
         }
-        
-
     }
 
 }
