@@ -51,19 +51,18 @@ public class FadeManager : MonoBehaviour
             }
             this.GetComponentInChildren<Image>().color = new Color(0.0f, 0.0f, 0.0f, alpha);
         }
-
-        Debug.Log(alpha);
-
     }
 
     public void fadeIn()
     {
+        Debug.Log("わろた");
         isFadeIn = true;
         isFadeOut = false;
     }
 
     public void fadeOut()
     {
+        Debug.Log("スーパーわろたにえん");
         isFadeOut = true;
         isFadeIn = false;
     }
