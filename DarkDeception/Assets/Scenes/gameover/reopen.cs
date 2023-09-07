@@ -9,8 +9,8 @@ public class reopen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
     public GameObject _objText;
+    public GameObject _obj;
     public TextMeshProUGUI _text;
-    public GameObject _fadePrefab;
     public static bool clickButton;
 
     readonly float _fadeSpeed = 1f;
@@ -24,7 +24,7 @@ public class reopen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
    {
         clickButton = true;
         PlayerLife.life = 3;
-        StartCoroutine(nameof(LoadScene));
+        _obj.GetComponent<SceneController>().sceneChange("SceneMain");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -38,13 +38,6 @@ public class reopen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         //_text.color = new Color(0.68f, 0.68f, 0.69f, 1.0f);
         _text.color = new Color(0.86f, 0.86f, 0.86f, 1.0f);
         _text.fontSize = 30;
-    }
-
-    IEnumerator LoadScene()
-    {
-        Instantiate(_fadePrefab);
-        yield return new WaitForSeconds(_fadeSpeed);
-        SceneManager.LoadScene("SceneMain");
     }
 
 }
