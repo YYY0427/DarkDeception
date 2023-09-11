@@ -17,6 +17,7 @@ public class stage1 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     //　読み込み率を表示するスライダー
     [SerializeField]
     private Slider slider;
+    public AudioSource _audioSource;
 
 
     readonly float _fadeSpeed = 1f;
@@ -25,11 +26,16 @@ public class stage1 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         _objText = GameObject.Find("stage1Text");
         _text = _objText.GetComponent<TextMeshProUGUI>();
+        // AudioSourceのコンポーネント取得
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void OnClickStartButton()
     {
-    //    _obj.GetComponent<SceneController>().sceneChange("SceneMain");
+        //    _obj.GetComponent<SceneController>().sceneChange("SceneMain");
+
+        // 音楽再生
+        _audioSource.Play();
 
         //　ロード画面UIをアクティブにする
         loadUI.SetActive(true);

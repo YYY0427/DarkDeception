@@ -10,6 +10,7 @@ public class goBack : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public GameObject _obj;
     public GameObject _objText;
     public TextMeshProUGUI _text;
+    public AudioSource _audioSource;
 
     readonly float _fadeSpeed = 1f;
 
@@ -17,10 +18,14 @@ public class goBack : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         _objText = GameObject.Find("goBackText");
         _text = _objText.GetComponent<TextMeshProUGUI>();
+        // AudioSourceのコンポーネント取得
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void OnClickStartButton()
     {
+        // 音楽再生
+        _audioSource.Play();
         _obj.GetComponent<SceneController>().sceneChange("titleScene");
     }
 
