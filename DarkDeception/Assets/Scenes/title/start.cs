@@ -12,6 +12,7 @@ public class start : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     public GameObject _objText;
     public TextMeshProUGUI _text;
     public GameObject _fadePrefab;
+    public AudioSource _audioSource;
 
     readonly float _fadeSpeed = 1f;
 
@@ -19,10 +20,14 @@ public class start : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     {
         _objText = GameObject.Find("startText");
         _text = _objText.GetComponent<TextMeshProUGUI>();
+        // AudioSourceコンポーネントの取得
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void OnClickStartButton()
     {
+        // 音源の再生
+        _audioSource.Play();
         _fade.GetComponent<SceneController>().sceneChange("sceneSelectScene");
     }
 

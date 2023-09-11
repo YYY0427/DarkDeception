@@ -9,15 +9,19 @@ public class quitTitle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
     public GameObject _objText;
     public TextMeshProUGUI _text;
+    public AudioSource _audioSource;
     void Start()
     {
         _objText = GameObject.Find("quitText");
         _text = _objText.GetComponent<TextMeshProUGUI>();
-
+        // AudioSourceコンポーネントの取得
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void OnClickStartButton()
     {
+        // 音源の再生
+        _audioSource.Play();
         UnityEditor.EditorApplication.isPlaying = false;
     }
 
