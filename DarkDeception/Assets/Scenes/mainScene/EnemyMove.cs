@@ -26,6 +26,8 @@ public class EnemyMove : MonoBehaviour
     float speed = 0f;
     int timer = 0;
 
+    public AudioSource trackingSound;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -70,6 +72,8 @@ public class EnemyMove : MonoBehaviour
 
         if (tracking)
         {
+            
+
             //追跡の時、quitRangeより距離が離れたら中止
             if (distance > quitRange)
             {
@@ -89,6 +93,7 @@ public class EnemyMove : MonoBehaviour
             {
                 tracking = true;
                 animator.SetTrigger("fly");
+                trackingSound.Play();
             }
 
             // エージェントが現目標地点に近づいてきたら、

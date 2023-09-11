@@ -9,6 +9,7 @@ public class quitTitle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
     public GameObject _objText;
     public TextMeshProUGUI _text;
+    public AudioSource _cancellationSound;
     void Start()
     {
         _objText = GameObject.Find("quitText");
@@ -18,6 +19,7 @@ public class quitTitle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnClickStartButton()
     {
+        _cancellationSound.Play();
         UnityEditor.EditorApplication.isPlaying = false;
     }
 

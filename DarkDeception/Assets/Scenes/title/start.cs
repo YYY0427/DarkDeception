@@ -12,7 +12,6 @@ public class start : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     public GameObject _objText;
     public TextMeshProUGUI _text;
     public GameObject _fadePrefab;
-
     readonly float _fadeSpeed = 1f;
 
     void Start()
