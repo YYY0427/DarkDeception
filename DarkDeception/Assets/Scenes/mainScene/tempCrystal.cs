@@ -8,8 +8,11 @@ public class tempCrystal : MonoBehaviour
     //クリスタルの位置に表示するミニマップ用Cube
     // private GameObject CrystalCube;
 
-    public AudioClip _collisionSound;   // 衝突する際に再生する音
-    private AudioSource _audioSource;   
+    //public AudioClip _collisionSound;   // 衝突する際に再生する音
+    public AudioSource _audioSource;
+    //timer
+    int _destroyTimer = 0;
+    bool _destroyFlag = false;
 
     //static bool isEnable;// 存在するかどうか
     void Start()
@@ -22,18 +25,28 @@ public class tempCrystal : MonoBehaviour
 
         // AudioSourceコンポーネントを取得
         _audioSource = GetComponent<AudioSource>();
-        _audioSource.clip = _collisionSound;
+        //_audioSource.clip = _collisionSound;
     }
+
+    private void Update()
+    {
+        if(_destroyTimer > 8)
+        {
+            //Destroy(this.gameObject);
+            //_audioSource.Play
+        }
+        else if(_destroyFlag)
+        {
+            //_destroyTimer++;
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "Player")
         {
-            Debug.Log("A");
-           // Destroy(CrystalCube);
-            Destroy(this.gameObject);
-            // 音源を再生
             _audioSource.Play();
+            //_destroyFlag = true;
         }
     }
-
 }
