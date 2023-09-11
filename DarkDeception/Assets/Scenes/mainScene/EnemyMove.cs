@@ -17,6 +17,7 @@ public class EnemyMove : MonoBehaviour
     public bool tracking = false;
     public float trackigHeight = 10f;
     public float trackingPlayerSpeed;
+    public AudioSource trackingSound;    
 
     private Rigidbody rb;
     private NavMeshAgent agent;
@@ -32,6 +33,8 @@ public class EnemyMove : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
+
+        trackingSound = GetComponent<AudioSource>();
 
         // autoBraking を無効にすると、目標地点の間を継続的に移動します
         //(つまり、エージェントは目標地点に近づいても速度をおとしません)
@@ -85,9 +88,12 @@ public class EnemyMove : MonoBehaviour
         else
         {
             agent.speed = normalSpeed;
+
             //PlayerがtrackingRangeより近づいたら追跡開始
             if (distance < trackingRange)
             {
+                // 笑い声再生
+                trackingSound.Play();
                 tracking = true;
                 animator.SetTrigger("fly");
             }
@@ -111,7 +117,6 @@ public class EnemyMove : MonoBehaviour
 
         agent.velocity = (agent.steeringTarget - transform.position).normalized * agent.speed;
         transform.forward = agent.steeringTarget - transform.position;
-
     }
     void OnDrawGizmosSelected()
     {

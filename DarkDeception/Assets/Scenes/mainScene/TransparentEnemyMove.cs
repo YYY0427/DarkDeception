@@ -10,6 +10,7 @@ public class TransparentEnemyMove : MonoBehaviour
 {
     private NavMeshAgent agent;
     private Animator anim;
+    public AudioSource trackingSound;
     Vector3 playerPos;
     Vector3 initPos;
     Vector3 targetPos;
@@ -30,6 +31,7 @@ public class TransparentEnemyMove : MonoBehaviour
         targetPos = initPos;
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
+        trackingSound = GetComponent<AudioSource>();
 
         // autoBraking を無効にすると、目標地点の間を継続的に移動します
         //(つまり、エージェントは目標地点に近づいても
@@ -65,6 +67,8 @@ public class TransparentEnemyMove : MonoBehaviour
             //PlayerがtrackingRangeより近づいたら追跡開始
             if (distance < trackingRange)
             {
+                // 笑い声再生
+                trackingSound.Play();
                 tracking = true;
                 anim.SetTrigger("fly");
             }
