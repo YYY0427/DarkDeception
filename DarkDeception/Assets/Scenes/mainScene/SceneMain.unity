@@ -5153,7 +5153,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 20
+  m_Speed: 15
   m_Acceleration: 0
   avoidancePriority: 50
   m_AngularSpeed: 0
@@ -5197,10 +5197,11 @@ MonoBehaviour:
   - {fileID: 1105266347}
   - {fileID: 1085701368}
   - {fileID: 326784958}
-  trackingRange: 30
-  quitRange: 50
+  trackingRange: 70
+  quitRange: 100
   tracking: 0
   trackigHeight: 30
+  trackingPlayerSpeed: 33
 --- !u!54 &258484198
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12954,7 +12955,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 30
+  m_Speed: 15
   m_Acceleration: 0
   avoidancePriority: 50
   m_AngularSpeed: 0
@@ -12996,10 +12997,11 @@ MonoBehaviour:
   - {fileID: 138555085}
   - {fileID: 924960495}
   - {fileID: 1359710116}
-  trackingRange: 40
-  quitRange: 50
+  trackingRange: 70
+  quitRange: 100
   tracking: 0
   trackigHeight: 10
+  trackingPlayerSpeed: 33
 --- !u!54 &679071144
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18515,7 +18517,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 20
+  m_Speed: 15
   m_Acceleration: 0
   avoidancePriority: 50
   m_AngularSpeed: 0
@@ -18558,10 +18560,11 @@ MonoBehaviour:
   - {fileID: 375647843}
   - {fileID: 1691555123}
   - {fileID: 1700644661}
-  trackingRange: 40
-  quitRange: 50
+  trackingRange: 70
+  quitRange: 100
   tracking: 0
   trackigHeight: 0
+  trackingPlayerSpeed: 33
 --- !u!1 &959444973 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8604845690668488214, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
@@ -38424,6 +38427,22 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5014801674428700068, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
+      propertyPath: quitRange
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014801674428700068, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
+      propertyPath: trackingRange
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014801674428700068, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
+      propertyPath: playerTrackingSpeed
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014801674428700068, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
+      propertyPath: trackingPlayerSpeed
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014801674428700068, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
       propertyPath: points.Array.data[0]
       value: 
       objectReference: {fileID: 241942148}
@@ -38457,7 +38476,7 @@ PrefabInstance:
       objectReference: {fileID: 326784958}
     - target: {fileID: 5014801674428700091, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
       propertyPath: m_Speed
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5014801674428700091, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
       propertyPath: m_Enabled
@@ -38465,11 +38484,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5014801674428700091, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
       propertyPath: m_Acceleration
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5014801674428700091, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
       propertyPath: m_AngularSpeed
-      value: 120
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5377329188820410949, guid: 2eaf2d27a6d41bb4ab7eb376c385798e, type: 3}
       propertyPath: m_Layer
@@ -38599,6 +38618,26 @@ PrefabInstance:
     - target: {fileID: 6269168991969240342, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269168991969240342, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
+      propertyPath: quitRange
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269168991969240342, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
+      propertyPath: trackigHeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269168991969240342, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
+      propertyPath: trackingRange
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269168991969240342, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
+      propertyPath: trackingPlayerSpeed
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269168991969240343, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
+      propertyPath: m_Speed
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6269168991969240343, guid: dba3e064a5e2e5f4b8c5097ca0f88513, type: 3}
       propertyPath: m_Enabled

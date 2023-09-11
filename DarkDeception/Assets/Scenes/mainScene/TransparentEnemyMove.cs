@@ -14,12 +14,14 @@ public class TransparentEnemyMove : MonoBehaviour
     Vector3 initPos;
     Vector3 targetPos;
     GameObject player;
-    
+
+    float normalSpeed;
     float distance;
     [SerializeField] float trackingRange = 3f;
     [SerializeField] float quitRange = 5f;
     [SerializeField] bool tracking = false;
     [SerializeField] float trackigHeight = 10f;
+    [SerializeField] float trackingPlayerSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +35,8 @@ public class TransparentEnemyMove : MonoBehaviour
         //(つまり、エージェントは目標地点に近づいても
         // 速度をおとしません)
         agent.autoBraking = false;
+
+        normalSpeed = agent.speed;
 
         //追跡したいオブジェクトの名前を入れる
         player = GameObject.Find("Player");
@@ -50,10 +54,11 @@ public class TransparentEnemyMove : MonoBehaviour
             if (distance > quitRange)
             {
                 tracking = false;
-                targetPos = initPos;
-                agent.destination = targetPos;
                 anim.SetTrigger("look");
             }
+            agent.speed = trackingPlayerSpeed;
+            targetPos = playerPos;
+            agent.destination = targetPos;
         }
         else
         {
@@ -61,10 +66,11 @@ public class TransparentEnemyMove : MonoBehaviour
             if (distance < trackingRange)
             {
                 tracking = true;
-                targetPos = playerPos;
-                agent.destination = targetPos;
                 anim.SetTrigger("fly");
             }
+            agent.speed = normalSpeed;
+            targetPos = initPos;
+            agent.destination = targetPos;
         }
         DoMove(targetPos);
     }
@@ -78,5 +84,16 @@ public class TransparentEnemyMove : MonoBehaviour
 
         agent.velocity = (agent.steeringTarget - transform.position).normalized * agent.speed;
         transform.forward = agent.steeringTarget - transform.position;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        //trackingRangeの範囲を赤いワイヤーフレームで示す
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, trackingRange);
+
+        //quitRangeの範囲を青いワイヤーフレームで示す
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, quitRange);
     }
 }
