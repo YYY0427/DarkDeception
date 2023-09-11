@@ -16,6 +16,7 @@ public class EnemyMove : MonoBehaviour
     public float quitRange = 5f;
     public bool tracking = false;
     public float trackigHeight = 10f;
+    public float trackingPlayerSpeed;
 
     private Rigidbody rb;
     private NavMeshAgent agent;
@@ -23,7 +24,7 @@ public class EnemyMove : MonoBehaviour
     Vector3 playerPos;
     Vector3 targetPos;
     GameObject player;
-    float speed = 0f;
+    float normalSpeed = 0f;
     int timer = 0;
 
     void Start()
@@ -35,7 +36,7 @@ public class EnemyMove : MonoBehaviour
         // autoBraking を無効にすると、目標地点の間を継続的に移動します
         //(つまり、エージェントは目標地点に近づいても速度をおとしません)
         agent.autoBraking = false;
-        speed = agent.speed;
+        normalSpeed = agent.speed;
 
         GotoNextPoint();
 
@@ -52,8 +53,7 @@ public class EnemyMove : MonoBehaviour
 
         // エージェントが現在設定された目標地点に行くように設定します
         targetPos = points[destPoint].position;
-
-        agent.destination = targetPos; // ターゲットの設定
+        agent.destination = targetPos; 
 
         // 配列内の次の位置を目標地点に設定し、
         // 必要ならば出発地点にもどります
@@ -63,7 +63,6 @@ public class EnemyMove : MonoBehaviour
 
     void Update()
     {
-
         //Playerとこのオブジェクトの距離を測る
         playerPos = player.transform.position;
         distance = Vector3.Distance(new Vector3(this.transform.position.x, this.transform.position.y + (trackigHeight / 2.0f), this.transform.position.z), playerPos);
@@ -77,13 +76,15 @@ public class EnemyMove : MonoBehaviour
                 animator.SetTrigger("look");
             }
 
+            agent.speed = trackingPlayerSpeed;
+
             //Playerを目標とする
             targetPos = playerPos;
-
             agent.destination = targetPos;
         }
         else
         {
+            agent.speed = normalSpeed;
             //PlayerがtrackingRangeより近づいたら追跡開始
             if (distance < trackingRange)
             {
@@ -96,20 +97,9 @@ public class EnemyMove : MonoBehaviour
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
                 GotoNextPoint();
-                //timer++;
-                //agent.speed = 0f;
-                //agent.updateRotation = false;
-
-                //if(timer > 120)
-                //{
-                //    timer = 0;
-                //    agent.speed = speed;
-                //    agent.updateRotation = true;
-                //    GotoNextPoint();
-                //}
             }
         }
-          DoMove(targetPos);
+        DoMove(targetPos);
     }
 
     private void DoMove(Vector3 targetPosition)
@@ -122,5 +112,15 @@ public class EnemyMove : MonoBehaviour
         agent.velocity = (agent.steeringTarget - transform.position).normalized * agent.speed;
         transform.forward = agent.steeringTarget - transform.position;
 
+    }
+    void OnDrawGizmosSelected()
+    {
+        //trackingRangeの範囲を赤いワイヤーフレームで示す
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, trackingRange);
+
+        //quitRangeの範囲を青いワイヤーフレームで示す
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, quitRange);
     }
 }
