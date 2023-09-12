@@ -12,14 +12,17 @@ public class stage1 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public GameObject _objText;
     public TextMeshProUGUI _text;
     public GameObject _fadePrefab;
+
     [SerializeField]
     private GameObject loadUI;
-    //　読み込み率を表示するスライダー
     [SerializeField]
     private Slider slider;
-
-
-    readonly float _fadeSpeed = 1f;
+    [SerializeField]
+    private GameObject enemyExplanation;
+    [SerializeField]
+    private GameObject crystalExplanation;
+    [SerializeField]
+    private GameObject button;
 
     void Start()
     {
@@ -27,9 +30,17 @@ public class stage1 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         _text = _objText.GetComponent<TextMeshProUGUI>();
     }
 
+    public void OnClickNextButton()
+    {
+        crystalExplanation.SetActive(false);
+        enemyExplanation.SetActive(true);
+        button.SetActive(true);
+    }
+
     public void OnClickStartButton()
     {
-    //    _obj.GetComponent<SceneController>().sceneChange("SceneMain");
+    //    button.SetActive(false);
+        enemyExplanation.SetActive(false);
 
         //　ロード画面UIをアクティブにする
         loadUI.SetActive(true);
@@ -60,12 +71,6 @@ public class stage1 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             var progressVal = Mathf.Clamp01(async.progress / 0.9f);
             slider.value = progressVal;
             yield return null;
-            //slider.value = async.progress;
-            //if (async.progress >= 0.9f)
-            //{
-            //    async.allowSceneActivation = true;
-            //}
-            //yield return null;
         }
     }
 }

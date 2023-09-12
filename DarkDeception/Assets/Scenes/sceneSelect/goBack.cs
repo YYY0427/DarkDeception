@@ -5,20 +5,32 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class goBack : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class GoBack : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject _obj;
     public GameObject _objText;
     public TextMeshProUGUI _text;
 
-    readonly float _fadeSpeed = 1f;
+    [SerializeField]
+    private GameObject crystalExplanation;
+
+    [SerializeField]
+    private GameObject enemyExplanation;
+
+    [SerializeField]
+    private GameObject startButton;
 
     void Start()
     {
         _objText = GameObject.Find("goBackText");
         _text = _objText.GetComponent<TextMeshProUGUI>();
     }
-
+    public void OnClickBackGameExplanation1()
+    {
+        startButton.SetActive(false);
+        enemyExplanation.SetActive(false);
+        crystalExplanation.SetActive(true);
+    }
     public void OnClickStartButton()
     {
         _obj.GetComponent<SceneController>().sceneChange("titleScene");

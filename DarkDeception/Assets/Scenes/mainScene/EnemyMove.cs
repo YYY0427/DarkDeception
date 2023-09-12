@@ -25,7 +25,6 @@ public class EnemyMove : MonoBehaviour
     Vector3 targetPos;
     GameObject player;
     float normalSpeed = 0f;
-    int timer = 0;
 
     void Start()
     {
