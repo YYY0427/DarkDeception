@@ -5,27 +5,34 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class goBack : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class GoBack : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject _obj;
     public GameObject _objText;
     public TextMeshProUGUI _text;
-    public AudioSource _audioSource;
 
-    readonly float _fadeSpeed = 1f;
+    [SerializeField]
+    private GameObject crystalExplanation;
+
+    [SerializeField]
+    private GameObject enemyExplanation;
+
+    [SerializeField]
+    private GameObject startButton;
 
     void Start()
     {
         _objText = GameObject.Find("goBackText");
         _text = _objText.GetComponent<TextMeshProUGUI>();
-        // AudioSourceのコンポーネント取得
-        _audioSource = GetComponent<AudioSource>();
     }
-
+    public void OnClickBackGameExplanation1()
+    {
+        startButton.SetActive(false);
+        enemyExplanation.SetActive(false);
+        crystalExplanation.SetActive(true);
+    }
     public void OnClickStartButton()
     {
-        // 音楽再生
-        _audioSource.Play();
         _obj.GetComponent<SceneController>().sceneChange("titleScene");
     }
 
