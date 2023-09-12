@@ -12,30 +12,37 @@ public class stage1 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public GameObject _objText;
     public TextMeshProUGUI _text;
     public GameObject _fadePrefab;
+
     [SerializeField]
     private GameObject loadUI;
-    //　読み込み率を表示するスライダー
     [SerializeField]
     private Slider slider;
-    public AudioSource _audioSource;
-
-
-    readonly float _fadeSpeed = 1f;
+    [SerializeField]
+    private GameObject enemyExplanation;
+    [SerializeField]
+    private GameObject crystalExplanation;
+    [SerializeField]
+    private GameObject button;
+    private Button startButton;
 
     void Start()
     {
         _objText = GameObject.Find("stage1Text");
         _text = _objText.GetComponent<TextMeshProUGUI>();
-        // AudioSourceのコンポーネント取得
-        _audioSource = GetComponent<AudioSource>();
+        startButton = button.GetComponent<Button>();
+    }
+
+    public void OnClickNextButton()
+    {
+        crystalExplanation.SetActive(false);
+        enemyExplanation.SetActive(true);
+        button.SetActive(true);
     }
 
     public void OnClickStartButton()
     {
-        //    _obj.GetComponent<SceneController>().sceneChange("SceneMain");
-
-        // 音楽再生
-        _audioSource.Play();
+        startButton.image.color = Color.black;  
+        enemyExplanation.SetActive(false);
 
         //　ロード画面UIをアクティブにする
         loadUI.SetActive(true);
@@ -66,12 +73,6 @@ public class stage1 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             var progressVal = Mathf.Clamp01(async.progress / 0.9f);
             slider.value = progressVal;
             yield return null;
-            //slider.value = async.progress;
-            //if (async.progress >= 0.9f)
-            //{
-            //    async.allowSceneActivation = true;
-            //}
-            //yield return null;
         }
     }
 }
