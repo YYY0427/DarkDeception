@@ -41,7 +41,6 @@ public class stage1 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnClickStartButton()
     {
-        startButton.image.color = Color.black;  
         enemyExplanation.SetActive(false);
 
         //　ロード画面UIをアクティブにする
@@ -53,7 +52,7 @@ public class stage1 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _text.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        _text.color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
         _text.fontSize = 36;
     }
 
