@@ -7,14 +7,11 @@ public class tempCrystal : MonoBehaviour
 {
     //クリスタルの位置に表示するミニマップ用Cube
     // private GameObject CrystalCube;
-
-    //public AudioClip _collisionSound;   // 衝突する際に再生する音
-    public AudioSource _audioSource;
-    //timer
-    int _destroyTimer = 0;
-    bool _destroyFlag = false;
-
     //static bool isEnable;// 存在するかどうか
+
+    private SoundManager soundManager;  // サウンドマネージャーの参照
+    [SerializeField] private AudioClip collisionSound = default;   // 衝突時の音
+
     void Start()
     {
        // CrystalCube = (GameObject)Resources.Load("CrystalCube");
@@ -23,30 +20,24 @@ public class tempCrystal : MonoBehaviour
         // プレハブを指定位置に生成
         // CrystalCube = Instantiate(CrystalCube, CrystalCubePos, Quaternion.identity);   
 
-        // AudioSourceコンポーネントを取得
-        _audioSource = GetComponent<AudioSource>();
-        //_audioSource.clip = _collisionSound;
+        // サウンドマネージャーのインスタンスを見つけて参照
+        soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
     }
-
-    private void Update()
-    {
-        if(_destroyTimer > 8)
-        {
-            //Destroy(this.gameObject);
-            //_audioSource.Play
-        }
-        else if(_destroyFlag)
-        {
-            //_destroyTimer++;
-        }
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "Player")
         {
-            _audioSource.Play();
-            //_destroyFlag = true;
+            PlayCollisionSound();
+
+            // クリスタルを消す
+            Destroy(this.gameObject);
         }
+    }
+    private void PlayCollisionSound()
+    {
+        // 音量調整をする
+        soundManager.SetVolume(0.2f);
+        // サウンドマネージャーを使用して音声を再生
+        soundManager.PlaySound(collisionSound);
     }
 }
