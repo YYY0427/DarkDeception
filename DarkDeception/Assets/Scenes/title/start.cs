@@ -33,13 +33,13 @@ public class start : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _text.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-        _text.fontSize = 36;
+        _text.color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+        //_text.fontSize = 36;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _text.color = new Color(0.68f, 0.68f, 0.69f, 1.0f);
-        _text.fontSize = 24;
+        _text.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        //_text.fontSize = 24;
     }
 }

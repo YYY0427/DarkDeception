@@ -17,7 +17,7 @@ public class EnemyMove : MonoBehaviour
     public bool tracking = false;
     public float trackigHeight = 10f;
     public float trackingPlayerSpeed;
-    public AudioSource trackingSound;    
+    //public AudioSource trackingSound;    
 
     private Rigidbody rb;
     private NavMeshAgent agent;
@@ -28,13 +28,18 @@ public class EnemyMove : MonoBehaviour
     float normalSpeed = 0f;
     int timer = 0;
 
+    private SoundManager soundManager;  // サウンドマネージャーの参照
+    [SerializeField] private AudioClip foundSound = default;   // プレイヤーを見つけた時の音
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
 
-        trackingSound = GetComponent<AudioSource>();
+        //trackingSound = GetComponent<AudioSource>();
+        // サウンドマネージャーのインスタンスを見つけて参照
+        soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
 
         // autoBraking を無効にすると、目標地点の間を継続的に移動します
         //(つまり、エージェントは目標地点に近づいても速度をおとしません)
@@ -46,7 +51,11 @@ public class EnemyMove : MonoBehaviour
         //追跡したいオブジェクトの名前を入れる
         player = GameObject.Find("Player");
     }
-
+    private void PlayFoundPlayerSound()
+    {
+        // サウンドマネージャーを使用して音声を再生
+        soundManager.PlaySound(foundSound);
+    }
 
     void GotoNextPoint()
     {
@@ -93,7 +102,7 @@ public class EnemyMove : MonoBehaviour
             if (distance < trackingRange)
             {
                 // 笑い声再生
-                trackingSound.Play();
+                PlayFoundPlayerSound();
                 tracking = true;
                 animator.SetTrigger("fly");
             }

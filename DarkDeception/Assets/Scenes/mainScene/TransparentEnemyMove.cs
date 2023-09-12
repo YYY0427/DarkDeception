@@ -24,6 +24,9 @@ public class TransparentEnemyMove : MonoBehaviour
     [SerializeField] float trackigHeight = 10f;
     [SerializeField] float trackingPlayerSpeed;
 
+    private SoundManager soundManager;  // サウンドマネージャーの参照
+    [SerializeField] private AudioClip foundSound = default;   // プレイヤーを見つけた時の音
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +34,9 @@ public class TransparentEnemyMove : MonoBehaviour
         targetPos = initPos;
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        trackingSound = GetComponent<AudioSource>();
+        //trackingSound = GetComponent<AudioSource>();
+        // サウンドマネージャーのインスタンスを見つけて参照
+        soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
 
         // autoBraking を無効にすると、目標地点の間を継続的に移動します
         //(つまり、エージェントは目標地点に近づいても
@@ -68,7 +73,7 @@ public class TransparentEnemyMove : MonoBehaviour
             if (distance < trackingRange)
             {
                 // 笑い声再生
-                trackingSound.Play();
+                PlayFoundPlayerSound();
                 tracking = true;
                 anim.SetTrigger("fly");
             }
@@ -77,6 +82,12 @@ public class TransparentEnemyMove : MonoBehaviour
             agent.destination = targetPos;
         }
         DoMove(targetPos);
+    }
+
+    private void PlayFoundPlayerSound()
+    {
+        // サウンドマネージャーを使用して音声を再生
+        soundManager.PlaySound(foundSound);
     }
 
     private void DoMove(Vector3 targetPosition)

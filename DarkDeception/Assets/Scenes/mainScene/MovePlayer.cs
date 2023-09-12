@@ -29,6 +29,13 @@ public class MovePlayer : MonoBehaviour
 
     public static int _enemyKind; // 倒されたとき敵を記憶するための変数
 
+    public AudioSource footstepSound;       // 歩行音
+    public float footstepInterval = 0.5f;   // 歩行音の間隔
+    private float nextFootstepTime;
+
+    //private SoundManager soundManager;  // サウンドマネージャーの参照
+    //[SerializeField] private AudioClip WalkSound = default;   // 歩行時の音
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +43,7 @@ public class MovePlayer : MonoBehaviour
         _enemyKind = 1;
         con = GetComponent<CharacterController>();
         _singletonObj = GameObject.Find("Singleton");
-        Debug.Log(_singletonObj.name);
+        //Debug.Log(_singletonObj.name);
     }
 
     // Update is called once per frame
@@ -72,10 +79,21 @@ public class MovePlayer : MonoBehaviour
         // Todo:ホイールクリック時は視点を180°反対方向に回転させる
         mouseLook.x = isWheelCrick ? mouseLook.x + newRotationY : mouseLook.x;
 
-
-
         // 移動速度を取得
         float speed = Input.GetKey(KeyCode.LeftShift) ? dashSpeed : walkSpeed;
+
+        // 仮想の歩行キーを設定（例：Wキーが歩行を表す）
+        bool isWalking = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
+
+        if (isWalking)
+        {
+            // 歩行中の場合、歩行音を再生
+            if (Time.time >= nextFootstepTime)
+            {
+                footstepSound.Play();
+                nextFootstepTime = Time.time + footstepInterval;
+            }
+        }
 
         float horizontalInput = Input.GetAxis("Horizontal");    // aとs
         float verticalInput = Input.GetAxis("Vertical");        // wとs
@@ -88,6 +106,11 @@ public class MovePlayer : MonoBehaviour
         // Input.GetAxis("Horizontal") は左右（ADキー）の入力値
         Vector3 moveZ = cameraForward * Input.GetAxis("Vertical") * speed;  //　前後（カメラ基準）　 
         Vector3 moveX = transform.right * Input.GetAxis("Horizontal") * speed; // 左右（カメラ基準）
+
+        //if(Input.)
+        //{
+
+        //}
 
         Vector3 move = (moveZ + moveX);
 
@@ -149,11 +172,17 @@ public class MovePlayer : MonoBehaviour
 
             }
 
-            Debug.Log(dist);
-            Debug.Log(PlayerLife.life);
+            //Debug.Log(dist);
+            //Debug.Log(PlayerLife.life);
         }
         //Debug.Log("tintin");
     }
+
+    //private void PlayCollisionSound()
+    //{
+    //    // サウンドマネージャーを使用して音声を再生
+    //    soundManager.PlaySound(WalkSound);
+    //}
 }
 
 public class PlayerLife
