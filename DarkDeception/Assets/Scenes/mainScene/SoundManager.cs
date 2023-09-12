@@ -9,11 +9,8 @@ public class SoundManager : MonoBehaviour
     {
         // ‰¹Œ¹‚ğƒ[ƒh
         soundSource.clip = clip;
-        if (soundSource != null)
-        {
-            // ‰¹Œ¹‚ğÄ¶‚·‚é
-            soundSource.Play();
-        }
+        // ‰¹Œ¹‚ğÄ¶‚·‚é
+        soundSource.Play();
     }
     
     public void StopSound()

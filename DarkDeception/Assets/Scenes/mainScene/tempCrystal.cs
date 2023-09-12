@@ -28,7 +28,6 @@ public class tempCrystal : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             PlayCollisionSound();
-            DontDestroyOnLoad(soundManager);
 
             // ƒNƒŠƒXƒ^ƒ‹‚ğÁ‚·
             Destroy(this.gameObject);
